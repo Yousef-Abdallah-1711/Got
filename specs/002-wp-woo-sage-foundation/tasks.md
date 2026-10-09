@@ -44,11 +44,11 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ### Implementation for User Story 1
 
-- [ ] T013 [US1] Activate `got-sage` theme and `got-commerce` plugin on staging — **BLOCKED 2026-10-09**: attempted on the local substitute site; `got-commerce` shows "Cannot Activate" in wp-admin — Local's site PHP is 8.2.29, but Sage 11/Acorn v6 raised the floor to PHP >=8.3 (ADR 0001). `got-sage` declares the same `Requires PHP: 8.3` header and will hit the same block. **Owner action needed**: bump the Local site's PHP version to 8.3+ via Local's own UI (no CLI/API found to do this non-interactively) — Local currently only has the 8.2.29 runtime installed, so it will need to download 8.3+. Not something an agent can do for a GUI-only app.
-- [ ] T014 [US1] Verify HTTPS with no mixed-content warnings on the staging URL
-- [ ] T015 [US1] Verify the homepage renders without a PHP fatal error with the default (unstyled) theme
+- [x] T013 [US1] Activate `got-sage` theme and `got-commerce` plugin on staging — **DONE 2026-10-09** (local substitute): owner bumped Local's site PHP to 8.3.17 and installed ACF Pro; both `got-sage` and `got-commerce` now show Active in wp-admin, verified via live browser automation. Found and fixed three real bugs blocking this along the way (see commit `1241414`): `ThemeServiceProvider` wasn't extending the real `SageServiceProvider`, the committed `composer.lock` was generated under PHP 8.5 and baked in an overly strict `>=8.4.1` platform check, and `resources/views/` had zero views causing indefinite hangs instead of a clean render.
+- [ ] T014 [US1] Verify HTTPS with no mixed-content warnings on the staging URL — still blocked, no staging exists (T001/T002). Local dev is plain HTTP by design; not equivalent to this check.
+- [x] T015 [US1] Verify the homepage renders without a PHP fatal error with the default (unstyled) theme — **DONE 2026-10-09**: verified live at `http://got.local/` — HTTP 200, placeholder content renders, confirmed via screenshot, second request 0.18s (healthy, not hanging).
 
-**Checkpoint**: User Story 1 is independently testable — staging is live and functional.
+**Checkpoint**: User Story 1 is independently testable on the local substitute — staging-specific verification (T014, and the hosting/DNS tasks) remains blocked pending T001/T002.
 
 ---
 
