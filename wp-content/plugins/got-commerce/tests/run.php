@@ -82,6 +82,7 @@ function sanitize_text_field(string $text): string { return trim($text); }
 function sanitize_key(string $text): string { return strtolower($text); }
 function wp_unslash($value) { return $value; }
 function current_user_can($capability): bool { return $capability === 'got_manage_site_mode'; }
+function wp_get_current_user() { return $GLOBALS['test_current_user'] ?? null; }
 function get_option($key, $default = false) { return $GLOBALS['test_options'][$key] ?? $default; }
 function update_option($key, $value, $autoload = null): bool
 {
@@ -108,6 +109,31 @@ function delete_option($key): bool
     return true;
 }
 function wp_verify_nonce($nonce, $action): bool { return $nonce === 'valid-nonce' && $action === 'got_site_mode_change'; }
+function admin_url($path = ''): string
+{
+    return 'http://got.local/wp-admin/' . ltrim((string) $path, '/');
+}
+function add_query_arg($key, $value, $url): string
+{
+    return $url
+        . (str_contains($url, '?') ? '&' : '?')
+        . rawurlencode((string) $key)
+        . '='
+        . rawurlencode((string) $value);
+}
+function wp_safe_redirect($url): bool
+{
+    $GLOBALS['test_redirect_url'] = $url;
+    throw new RuntimeException('Captured redirect in isolated test adapter.');
+}
+function esc_html($text): string
+{
+    return (string) $text;
+}
+function wp_die($message = '', $title = '', $args = []): void
+{
+    throw new RuntimeException('Unexpected wp_die: ' . $message);
+}
 function user_can($user, $capability): bool { return ! empty($user->caps[$capability]); }
 function wp_count_posts($post_type)
 {
@@ -226,6 +252,22 @@ $result = SiteMode::process_submission('store', null, actor());
 check($result['status'] === 'invalid_nonce' && $GLOBALS['test_options'] === $before, 'missing nonce rejected without mutation');
 $result = SiteMode::process_submission('store', 'bad-nonce', actor());
 check($result['status'] === 'invalid_nonce' && $GLOBALS['test_options'] === $before, 'invalid nonce rejected without mutation');
+$GLOBALS['test_current_user'] = actor();
+$GLOBALS['test_redirect_url'] = null;
+$_POST = ['_wpnonce' => 'bad-nonce', 'got_site_mode' => 'store'];
+try {
+    SiteMode::handle_admin_post();
+} catch (RuntimeException) {
+    // The adapter captures the redirect before the production handler's exit.
+}
+unset($_POST, $GLOBALS['test_current_user']);
+check(
+    str_contains((string) $GLOBALS['test_redirect_url'], 'got_site_mode_result=invalid_nonce')
+        && $GLOBALS['test_options'] === $before
+        && ! isset($GLOBALS['test_options'][SiteMode::ACTIVITY_OPTION])
+        && $GLOBALS['test_cache_flushes'] === 0,
+    'admin-post handler adapter rejects invalid nonce without changing mode, audit, or cache state'
+);
 $result = SiteMode::process_submission('live', 'valid-nonce', actor());
 check($result['status'] === 'invalid_mode' && $GLOBALS['test_options'] === $before, 'unknown enum value rejected without mutation');
 
