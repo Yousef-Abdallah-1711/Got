@@ -2,17 +2,27 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Roots\Acorn\Sage\SageServiceProvider;
 
-class ThemeServiceProvider extends ServiceProvider
+class ThemeServiceProvider extends SageServiceProvider
 {
-    public function register(): void
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
     {
-        // Theme services will be registered here as the theme grows.
+        parent::register();
     }
 
-    public function boot(): void
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
     {
-        // Theme bootstrapping will be added here as the theme grows.
+        parent::boot();
     }
 }
