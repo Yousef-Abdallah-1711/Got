@@ -209,6 +209,8 @@ check($GLOBALS['test_wc_args']['limit'] === 1 && $GLOBALS['test_wc_args']['pagin
 // Unauthorized role and absent capability are rejected without writes or side effects.
 reset_state();
 $before = $GLOBALS['test_options'];
+$result = SiteMode::process_submission('store', 'valid-nonce', null);
+check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'unauthenticated submission rejected without mutation');
 $result = SiteMode::process_submission('store', 'valid-nonce', actor(['editor'], true));
 check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'non-approved role rejected without mutation');
 $result = SiteMode::process_submission('store', 'valid-nonce', actor(['administrator'], false));
