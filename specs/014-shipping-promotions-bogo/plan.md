@@ -8,7 +8,7 @@ Configure native WooCommerce shipping zones/coupons (already mostly covered by F
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (promotion eligibility hooks into WooCommerce's cart/fee calculation pipeline).
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (promotion eligibility hooks into WooCommerce's cart/fee calculation pipeline).
 **Primary Dependencies**: WooCommerce cart/fee hooks, native coupon system.
 **Storage**: New small table or CPT for promotion configuration (eligible products, quantity/threshold, active window, stacking rule) — decided in research.md.
 **Testing**: Playwright E2E (BOGO eligible/ineligible/expired, free-shipping threshold boundary, coupon valid/invalid), PHP unit tests for the eligibility calculator.

@@ -8,7 +8,7 @@ Use WooCommerce's native product-review system (comments-based) with a verified-
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade.
 **Primary Dependencies**: WooCommerce native reviews (built on WordPress comments), Feature 013's `woocommerce_order_status_changed` hook infrastructure, Feature 011's order-ownership model.
 **Storage**: WooCommerce-native (comments table + comment meta for rating); no new custom table.
 **Testing**: Playwright E2E (verified-gate enforcement, moderation visibility, rating display), PHP unit test for the 7-day scheduling logic.

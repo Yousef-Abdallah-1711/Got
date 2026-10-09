@@ -11,7 +11,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 ## Phase 1: Setup
 
 - [ ] T001 Confirm Feature 002's theme/plugin skeleton is active on staging (hard dependency)
-- [ ] T002 [P] Configure `tailwind.config.js` to read CSS custom properties from `resources/css/tokens.css`
+- [ ] T002 [P] Wire Tailwind v4's CSS-first `@theme` block in `resources/css/app.css` to the custom properties defined in `resources/css/tokens.css` (no `tailwind.config.js` — Sage 11 ships Tailwind v4, see `docs/adr/0001-sage-version.md`, updated 2026-10-09 from the originally-planned Tailwind-3 JS-config approach)
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 

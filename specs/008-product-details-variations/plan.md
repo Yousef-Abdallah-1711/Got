@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade, Alpine.js.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade, Alpine.js.
 **Primary Dependencies**: WooCommerce variable products/variations, WooCommerce attribute term meta (color hex).
 **Storage**: No new tables; one new term-meta field (`hex`) on `pa_color` terms.
 **Testing**: Playwright E2E (variation selection, stock-cap, add-to-cart, network-failure recovery), accessibility (keyboard variation nav), schema validation.

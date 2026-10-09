@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (CheckoutService, HPOS-compatible), Alpine.js (cart/checkout forms).
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (CheckoutService, HPOS-compatible), Alpine.js (cart/checkout forms).
 **Primary Dependencies**: WooCommerce Store API (cart add/update/coupon, checkout), WooCommerce shipping zones, WooCommerce guest session (ADR 0008).
 **Storage**: WooCommerce HPOS order tables, native cart session — no new custom tables.
 **Testing**: Full order-lifecycle E2E suite (`docs/testing/commerce-test-matrix.md`), PHP unit tests for `CheckoutService`'s idempotency-key logic, WC integration tests for stock reduction.

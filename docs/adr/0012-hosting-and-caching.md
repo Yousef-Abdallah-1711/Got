@@ -5,7 +5,7 @@ BLOCKED — hosting provider is `[TBD]` in the PRD; the caching *pattern* is dec
 
 ## Context
 
-PRD §9 requires "Managed WordPress hosting with PHP 8.2+, MySQL 8 or MariaDB 10.6+, HTTPS, daily backups, and staging environment," plus Cloudflare for DNS/CDN/WAF. PRD §8 Scalability requires full-page caching for public pages, object caching (Redis-compatible) for WooCommerce queries, and explicit drop-day traffic-spike handling (up to 10× baseline).
+PRD §9 requires "Managed WordPress hosting with PHP 8.2+, MySQL 8 or MariaDB 10.6+, HTTPS, daily backups, and staging environment," plus Cloudflare for DNS/CDN/WAF. **Raised to PHP 8.3+ 2026-10-09** per `docs/adr/0001-sage-version.md`'s ratified move to Sage 11/Acorn v6, which requires PHP >=8.3 — the selection criteria below reflect this. PRD §8 Scalability requires full-page caching for public pages, object caching (Redis-compatible) for WooCommerce queries, and explicit drop-day traffic-spike handling (up to 10× baseline).
 
 ## Options
 
@@ -25,7 +25,7 @@ PRD §9 requires "Managed WordPress hosting with PHP 8.2+, MySQL 8 or MariaDB 10
 
 ## Decision
 
-**Hosting vendor selection is deferred to the owner** (genuinely `[TBD]`, no PRD lean), but the **non-negotiable selection criteria** are fixed by this ADR: PHP 8.2+ support, native or well-documented object-cache support, a real staging environment, daily automated backups with tested restore, and either built-in WooCommerce-aware full-page caching or clearly documented manual cache-exclusion rules for cart/checkout/account routes. **Caching pattern**: full-page cache + CDN for public pages, object cache for WooCommerce queries, AJAX/Store-API-loaded cart fragments on cached pages, zero public caching of personalized routes — matching `docs/architecture/overview.md` §3's request-flow diagram exactly.
+**Hosting vendor selection is deferred to the owner** (genuinely `[TBD]`, no PRD lean), but the **non-negotiable selection criteria** are fixed by this ADR: PHP 8.3+ support (raised from 8.2+, see Context above), native or well-documented object-cache support, a real staging environment, daily automated backups with tested restore, and either built-in WooCommerce-aware full-page caching or clearly documented manual cache-exclusion rules for cart/checkout/account routes. **Caching pattern**: full-page cache + CDN for public pages, object cache for WooCommerce queries, AJAX/Store-API-loaded cart fragments on cached pages, zero public caching of personalized routes — matching `docs/architecture/overview.md` §3's request-flow diagram exactly.
 
 ## Consequences
 

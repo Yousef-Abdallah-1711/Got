@@ -2,7 +2,8 @@
 
 ## Decision: Sage version
 
-**Decision**: Target Sage 10 on Acorn, with a mandatory version-confirmation step as this feature's first task.
+**Decision (updated 2026-10-09, SUPERSEDES the original planning-time decision below)**: the version-confirmation step was actually run — `composer create-project roots/sage` via Docker found the installer's current default is **Sage 11** (Acorn v6.3.0, Vite ^8, Tailwind v4, PHP >=8.3), not Sage 10. Pinning `roots/sage:10.*` was also verified to still work (v10.8.2), but its bare scaffold uses Bud.js with no Acorn by default, so matching this project's documented "Acorn + Vite" stack on Sage 10 would have meant assembling an unofficial combination by hand. The project owner explicitly chose to **move to Sage 11** rather than pin Sage 10. See `docs/adr/0001-sage-version.md` for full verified versions and the resulting consequential changes (PHP floor, Tailwind 4 CSS-first config).
+**Original planning-time decision (superseded)**: Target Sage 10 on Acorn, with a mandatory version-confirmation step as this feature's first task.
 **Rationale**: Every project document (`GOT-Store-PRD.md`, `PRODUCT.md`) fixes Sage 10 as the documented baseline. No internet access was available during planning to verify whether Sage 10 is still the current Roots release at build time.
 **Alternatives considered**: Silently installing whatever the Roots installer currently scaffolds (rejected — could silently diverge from every planning document); a non-Sage Blade bridge (rejected — not requested, reopens settled architecture questions).
 **Reference**: `docs/adr/0001-sage-version.md`.
@@ -29,7 +30,7 @@
 ## Decision: Hosting provider
 
 **Decision**: Deferred — not decided in this feature.
-**Rationale**: Genuinely unresolved per `docs/adr/0012-hosting-and-caching.md`; this feature's tasks are written to be host-agnostic (any host meeting the stated criteria: PHP 8.2+, object cache support, staging environment, daily backups).
+**Rationale**: Genuinely unresolved per `docs/adr/0012-hosting-and-caching.md`; this feature's tasks are written to be host-agnostic (any host meeting the stated criteria: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6), object cache support, staging environment, daily backups).
 **Status**: BLOCKED pending owner/dev-lead selection — tracked in `docs/planning/risks-and-blockers.md` Tier 1.
 
 ## Dependencies confirmed from prior planning (not re-derived here)

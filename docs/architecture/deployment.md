@@ -36,7 +36,7 @@ flowchart LR
 
 ## Hosting / CDN / DNS
 
-- **Hosting**: managed WordPress hosting, PHP 8.2+, MySQL 8/MariaDB 10.6+, HTTPS, daily backups, staging environment — provider is `[TBD]` per PRD §9/§16. **REQUIRES APPROVAL/selection.**
+- **Hosting**: managed WordPress hosting, PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see `docs/adr/0001-sage-version.md`), MySQL 8/MariaDB 10.6+, HTTPS, daily backups, staging environment — provider is `[TBD]` per PRD §9/§16. **REQUIRES APPROVAL/selection.**
 - **DNS/CDN**: Cloudflare for DNS, SSL, CDN, WAF, bot protection (PRD §9). Domain `gøteg.com` ownership/DNS control and IDN/Punycode handling are explicitly unverified (PRD §16, `PRODUCT.md` §11) — **BLOCKED** until the brand owner confirms.
 - **Caching**: full-page cache for public pages (homepage, shop shell, static content), object cache (Redis-compatible) for WooCommerce queries; cart/checkout/account HTML is never publicly cached (constitution + PRD §8 both state this). See `docs/architecture/overview.md` §3 for the request-flow diagram this governs.
 

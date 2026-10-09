@@ -8,7 +8,7 @@ Build the 8 remaining content pages as ordinary WordPress Pages (reusing Feature
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade for pages; vanilla JS for the consent banner (must run before GTM loads).
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade for pages; vanilla JS for the consent banner (must run before GTM loads).
 **Primary Dependencies**: Google Tag Manager, an SEO plugin or minimal custom meta output (choice deferred to task level — not an architectural decision).
 **Storage**: Consent choice stored as a first-party cookie (`got_consent`), not server-side.
 **Testing**: Playwright E2E (consent gating verified at network level, event-fires-once-per-order), SEO schema/sitemap validation, broken-link check.

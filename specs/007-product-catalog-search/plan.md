@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade, Alpine.js (filter/sort/load-more state), vanilla `URLSearchParams` for query-string sync.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade, Alpine.js (filter/sort/load-more state), vanilla `URLSearchParams` for query-string sync.
 **Primary Dependencies**: WooCommerce product query (`WP_Query`/`wc_get_products()`), WooCommerce product attributes (size).
 **Storage**: N/A — reads WooCommerce data live; no new storage.
 **Testing**: Playwright E2E (sort/filter/load-more/back-button/no-results scenarios), Lighthouse performance test.

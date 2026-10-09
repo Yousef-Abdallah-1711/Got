@@ -1,7 +1,7 @@
 # ADR 0001 — Sage Version
 
 ## Status
-PROPOSED (default decision made; REQUIRES APPROVAL to formally ratify, and REQUIRES VERIFICATION against live Roots release notes before Phase 1 tooling install).
+**VERIFIED 2026-10-09, SUPERSEDED DECISION: Sage 11** (not Sage 10 — see Decision below). Ratified by the project owner after the Phase 1 version-confirmation checklist below was actually run.
 
 ## Context
 
@@ -22,13 +22,32 @@ This planning session has no live internet access to check the current Roots Sag
 
 ## Decision
 
-**Default to Sage 10**, per every project document, with a **mandatory version-confirmation checklist** (documented in `docs/architecture/tech-stack.md` §6) to be run by the dev lead at the start of Phase 1, before any tooling is installed: scaffold a throwaway Sage project with `composer create-project roots/sage`, record the actual Sage/Acorn/Vite/Tailwind versions it produces, and update this ADR with the VERIFIED outcome. **Do not silently upgrade to a newer Sage line** even if one is offered as the installer default — if the installer's current default is no longer "Sage 10," stop and bring the discrepancy back to the owner as a REQUIRES APPROVAL decision, per the original project brief's explicit instruction not to silently change frameworks.
+**The Phase 1 version-confirmation checklist was run on 2026-10-09** (`composer create-project roots/sage` via a throwaway Docker container, per this ADR's own mandate). Result: the installer's current default is no longer Sage 10 — it is **Sage 11**, which bundles Acorn and Vite directly rather than requiring them as a manual add-on. Verified versions actually produced:
+
+| Package | Verified version |
+|---|---|
+| `roots/sage` (installer line) | 11.x (Acorn/Vite bundled by default) |
+| `roots/acorn` | v6.3.0 |
+| `vite` | ^8.0.0 |
+| `@roots/vite-plugin` | ^2.0.0 |
+| `tailwindcss` | ^4.0.0 (`@tailwindcss/vite` plugin) |
+| PHP platform requirement | >=8.3 |
+| Node engine requirement | ^20.19.0 \|\| >=22.12.0 |
+
+For comparison, pinning `roots/sage:10.*` explicitly was also verified to still work (v10.8.2), but its bare scaffold uses Bud.js (not Vite) and does not include Acorn by default — matching this project's documented "Acorn + Vite + Tailwind 3" stack would have required manually assembling an unofficial combination, not the installer's supported path.
+
+**Decision: move to Sage 11**, per the project owner's explicit choice (2026-10-09), accepting its current defaults (Acorn v6, Vite v8, Tailwind v4, PHP >=8.3) rather than pinning the now-superseded Sage 10 line. This is a real, owner-approved stack change, not a silent upgrade — it was raised as a REQUIRES APPROVAL discrepancy exactly as this ADR originally mandated, and resolved explicitly rather than defaulted into.
+
+**Consequential changes this decision requires elsewhere** (tracked for follow-through, not yet all applied at ADR-authoring time):
+- PHP floor raises from 8.2+ to **8.3+** everywhere it's stated (every feature `plan.md`'s Technical Context line, and `docs/adr/0012-hosting-and-caching.md`'s hosting selection criteria).
+- Tailwind moves from v3's `tailwind.config.js`-based theme extension to v4's CSS-first `@theme`/`@import "tailwindcss"` model — affects Feature 003's design-token implementation strategy specifically (`specs/003-design-tokens-global-ui/plan.md` and `tasks.md`).
+- `docs/architecture/tech-stack.md`'s version table needs the same corrections.
 
 ## Consequences
 
-- Planning documents written now (file structure, theme-plugin boundary, ACF block registration pattern) are safe to proceed on, since they're written at the level of Sage's stable conventions (Blade views, Acorn service container, Vite build), which are unlikely to change radically between minor Sage lines.
-- A version mismatch discovered at Phase 1 kickoff costs, at most, updating path assumptions in a handful of planning docs — not a re-architecture.
+- Every planning document that assumed Sage 10 / Acorn v5-class / Tailwind 3 / PHP 8.2+ needs a corresponding correction (tracked above and being applied across the repo as part of this decision, not deferred).
+- Tailwind 4's CSS-first configuration is a real architectural difference from Tailwind 3, not just a version bump — any feature whose plan describes `tailwind.config.js`-based token wiring needs its approach rewritten, not just its version string.
 
 ## Approval status
 
-REQUIRES APPROVAL (to ratify "Sage 10 unless the Phase 1 checklist says otherwise" as the official project policy) + REQUIRES VERIFICATION (the actual version-confirmation checklist run, which cannot happen in this offline planning session).
+**RATIFIED 2026-10-09** — Sage 11 is the official project policy, verified against a live installer run, not a default or a guess.

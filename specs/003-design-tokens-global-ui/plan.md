@@ -10,9 +10,9 @@ Port the dark/light CSS token system (with Acid Lime now the approved, resolved 
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade (Sage 10); vanilla JS for the pre-paint theme script (must run before Alpine initializes); Alpine.js 3.x for the toggle/menu/drawer interactivity.
+**Language/Version**: PHP 8.3+/Blade (Sage 11 — raised from the originally documented Sage 10/PHP 8.2+, see `docs/adr/0001-sage-version.md`); vanilla JS for the pre-paint theme script (must run before Alpine initializes); Alpine.js 3.x for the toggle/menu/drawer interactivity.
 
-**Primary Dependencies**: Tailwind CSS 3.x (theme extended from CSS custom properties), Alpine.js, WordPress nav menus (for Footer/Header links).
+**Primary Dependencies**: Tailwind CSS **v4** (`@tailwindcss/vite`; CSS-first `@theme` configuration — **not** the `tailwind.config.js`-based theme extension originally planned, see Project Structure below), Alpine.js, WordPress nav menus (for Footer/Header links).
 
 **Storage**: N/A (theme preference is `localStorage`, not server-persisted) — WordPress menus for navigation content.
 
@@ -66,7 +66,9 @@ wp-content/themes/got-sage/
         announcement-bar.blade.php
         theme-toggle.blade.php
         cart-drawer.blade.php    # empty-state shell only; wired to real data in Feature 010
-  tailwind.config.js             # theme.extend reading the CSS custom properties
+# No tailwind.config.js — Tailwind v4 is CSS-first. Theme values are declared directly in
+# resources/css/app.css via an `@theme` block (or `@import` of tokens.css's custom properties
+# into @theme), not a separate JS config file. See `docs/adr/0001-sage-version.md`.
 ```
 
 **Structure Decision**: Global template parts live in `resources/views/partials/`, not inside any page-level ACF block, per the constitution's global-template-parts rule — they are included by `layouts/app.blade.php` on every page by default.

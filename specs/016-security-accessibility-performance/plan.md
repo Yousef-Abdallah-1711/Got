@@ -8,7 +8,7 @@ A full-site audit-and-remediation pass: 2FA + login lockout + security headers +
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (security headers, 2FA integration), no new frontend framework.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (security headers, 2FA integration), no new frontend framework.
 **Primary Dependencies**: A 2FA plugin or WordPress-native application-passwords-adjacent mechanism (task-level choice), a security-headers helper, axe-core, Lighthouse CI.
 **Storage**: N/A — this feature audits existing data, introduces no new entities.
 **Testing**: This feature *is* testing — the full regression suite from `docs/testing/test-strategy.md` and `docs/testing/commerce-test-matrix.md` runs here as the gate.

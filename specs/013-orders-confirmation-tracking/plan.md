@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade.
 **Primary Dependencies**: WooCommerce order-status hooks (`woocommerce_order_status_changed`), WordPress mail transport / chosen transactional provider (ADR 0011), the rate-limiter helper built in Feature 005 (reused here).
 **Storage**: Order status history is WooCommerce-native (order notes/status log) — no new table beyond reusing existing order data.
 **Testing**: Playwright E2E (confirmation, status-change emails via sandbox provider, tracking lookup incl. non-enumeration), email-delivery monitoring configuration.

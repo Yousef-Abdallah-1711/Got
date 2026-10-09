@@ -8,7 +8,7 @@ Register 9 ACF Blocks (Hero, Drop Intro, Editorial Split, Manifesto, Packaging S
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+, ACF Pro (6.x), Blade.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md), ACF Pro (6.x), Blade.
 **Primary Dependencies**: ACF Pro, WordPress Media Library (for image fields).
 **Storage**: ACF field data stored as WordPress post meta on each page.
 **Testing**: Manual admin QA (toggle fields empty/filled per block) + code review against editability rules; no E2E needed (no commerce logic).

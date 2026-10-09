@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: "WordPress, WooCommerce, and Sage theme foundation: provision environment, install WordPress, WooCommerce with HPOS, Roots Sage 10 on Acorn, Vite, Tailwind, and set up the got-sage theme and got-commerce plugin skeletons with CI."
+**Input**: User description: "WordPress, WooCommerce, and Sage theme foundation: provision environment, install WordPress, WooCommerce with HPOS, Roots Sage on Acorn, Vite, Tailwind, and set up the got-sage theme and got-commerce plugin skeletons with CI." **Updated 2026-10-09**: the Sage line is Sage 11 (Acorn v6, Vite, Tailwind v4), not the originally documented Sage 10 — see `docs/adr/0001-sage-version.md`.
 
 ## User Scenarios & Testing *(mandatory)*
 

@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade.
 **Primary Dependencies**: WooCommerce (`wc_get_products()`, `get_terms('product_cat')`), Feature 004's ACF block framework.
 **Storage**: No new storage — reads live WooCommerce data at render time.
 **Testing**: Visual parity per `docs/design/IMPLEMENTATION-VISUAL-CONTRACT.md` (viewport matrix and procedure, not restated here); Lighthouse performance run; manual QA sweep of section-presence combinations.

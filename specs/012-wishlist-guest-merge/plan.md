@@ -8,7 +8,7 @@ Guest wishlist via cookie/localStorage (de-duplicated product-ID list, mirroring
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (merge/validation logic), Alpine.js + a small vanilla-JS guest-storage module.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (merge/validation logic), Alpine.js + a small vanilla-JS guest-storage module.
 **Primary Dependencies**: WordPress user meta, WooCommerce product/stock lookups (for live availability).
 **Storage**: User meta (`_got_wishlist`) for authenticated users; cookie/localStorage for guests — no new database table.
 **Testing**: Playwright E2E (guest persistence, authenticated persistence, merge-with-overlap, move-to-cart validation, removed-product handling).

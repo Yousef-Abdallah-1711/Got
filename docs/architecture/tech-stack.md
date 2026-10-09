@@ -18,21 +18,21 @@ Per `GOT-Store-PRD.md` §1 and §9, the PRD's own stated stack is:
 | Interactivity | Alpine.js |
 | DB | MySQL 8 / MariaDB 10.6+ |
 
-This is **VERIFIED** as the document-of-record baseline (it is what the PRD says, directly quotable). Whether Sage 10 is still the *currently recommended* Roots release at build time is a separate, **PROPOSED** question addressed in `docs/adr/0001-sage-version.md` — this document does not silently upgrade it.
+This is **VERIFIED** as the document-of-record baseline (it is what the PRD says, directly quotable). **Superseded 2026-10-09**: the Phase 1 version-confirmation checklist (§6 below) was actually run, found Sage 10 no longer the installer's current default, and the project owner chose to move to **Sage 11** rather than pin Sage 10 — see `docs/adr/0001-sage-version.md` for the verified versions and rationale. The table in §2 below reflects the ratified Sage 11 stack, not the PRD's original Sage-10 baseline.
 
 ## 2. Full stack table
 
 | Component | Proposed version/range | Status | Rationale / cross-reference |
 |---|---|---|---|
 | WordPress core | 6.6–6.7 line (latest stable at build time) | PROPOSED | PRD §9 says "6.x, latest stable at launch"; exact minor must be re-checked at build time, not pinned now. |
-| PHP | 8.2.x (8.3 acceptable if host/Sage 10 confirms support) | PROPOSED, baseline 8.2 is VERIFIED from PRD §1/§9 | Sage 10 documented minimum is PHP 8.1+; PRD mandates 8.2+ for other reasons (perf, typed properties used by Acorn). Confirm host supports 8.2 before provisioning (`deployment.md`). |
+| PHP | **8.3+** | **VERIFIED 2026-10-09** | Raised from the PRD's original 8.2+ floor — Sage 11/Acorn v6's `composer.json` requires `php: >=8.3`. Confirm host supports 8.3 before provisioning (`deployment.md`); this also raises `docs/adr/0012-hosting-and-caching.md`'s selection criteria. |
 | WooCommerce | Latest stable 9.x line, HPOS enabled by default | PROPOSED | PRD §9 ("WooCommerce (latest stable)... HPOS enabled"); Commerce Principle 6 makes HPOS compatibility non-negotiable, so any plugin candidate (shipping, reviews, etc.) must declare HPOS compatibility before inclusion. |
-| Roots Sage | 10.x (documented baseline) | VERIFIED as documented baseline; PROPOSED whether still current-best — see ADR 0001 | PRD §1, §9; `.html-to-sage/` scaffolding and `specs/.../plan.md` project structure (`app/`, `framework/`, `resources/`) match the Sage 10 + Acorn convention, not Sage 11's structure (if/when that diverges). |
-| Acorn | Version matched to chosen Sage line (9.x/10.x Acorn) | PROPOSED | Acorn version is coupled to Sage major version; pin together, do not mix. |
+| Roots Sage | **11.x** | **VERIFIED 2026-10-09**, ratified — see ADR 0001 | Superseded from the PRD's documented Sage 10 baseline. `composer create-project roots/sage` was actually run; Sage 10 is still explicitly installable (`roots/sage:10.*`, verified v10.8.2) but its bare scaffold uses Bud.js (not Vite) with no Acorn by default, so it would not have matched this project's documented Acorn+Vite stack without unofficial manual assembly. Owner chose Sage 11 instead of pinning 10. |
+| Acorn | **v6.3.0** | **VERIFIED 2026-10-09** | Bundled by Sage 11's installer by default (unlike Sage 10, where Acorn is a manual add-on). |
 | Laravel components (via Acorn) | Whatever Illuminate components Acorn's chosen version bundles | PROPOSED | Acorn uses a trimmed set of Illuminate packages (container, view, config) — not a full Laravel app; do not add Laravel packages that assume a full framework (e.g., Eloquent ORM) without justification, per Commerce Principle 9 (avoid unnecessary dependencies). |
 | Blade | Bundled with Acorn's Illuminate View component | PROPOSED | No separate version decision; follows Acorn. |
-| Vite | 5.x or 6.x (match Sage 10's bundled `@roots/vite-config` / `@roots/sage` Vite plugin version) | PROPOSED | PRD §9; must match whatever `@roots/sage` CLI scaffolds for the chosen Sage line — do not hand-upgrade Vite independently of the Roots Vite plugin. |
-| Tailwind CSS | 3.x (NOT presumed v4 — see note) | PROPOSED, flagged | Tailwind v4 changed its config/build model substantially (CSS-first config, no `tailwind.config.js` by default, new engine). Sage 10's documented scaffolding assumes Tailwind 3's PostCSS pipeline. Upgrading to Tailwind 4 is an **upgrade decision requiring its own ADR-level approval**, not a default — flagged here as a risk for the dev lead to verify against the actual `@roots/sage` installer output at build time. |
+| Vite | **^8.0.0**, via `@roots/vite-plugin ^2.0.0` | **VERIFIED 2026-10-09** | Bundled by Sage 11's installer; do not hand-upgrade independently of the Roots Vite plugin. |
+| Tailwind CSS | **v4 (`^4.0.0`, via `@tailwindcss/vite`)** | **VERIFIED 2026-10-09, ratified** | Owner explicitly chose Sage 11's bundled Tailwind 4 over pinning Tailwind 3 (ADR 0001). This is a real architecture change, not just a version bump: Tailwind 4 uses CSS-first configuration (`@theme`/`@import "tailwindcss"`), no `tailwind.config.js` by default. **Feature 003's design-token implementation strategy must be rewritten for this** — any plan/task describing a `tailwind.config.js` reading CSS custom properties needs the CSS-first equivalent instead. |
 | Alpine.js | 3.x | PROPOSED | PRD §9; stable, low-churn, matches "lightweight interactivity" requirement and the no-SPA constraint. |
 | ACF Pro | Current stable (6.x line) | PROPOSED | Constitution HTML-to-Sage principle III mandates ACF Pro + code-owned field groups; CPT/taxonomy registration also lives in `framework/post-type/`, `framework/taxonomies/` per the documented project structure. |
 | MySQL / MariaDB | MySQL 8.0.x or MariaDB 10.6+ | VERIFIED from PRD §9 | Matches WooCommerce HPOS and WordPress 6.x minimums; exact minor pinned by hosting provider at provisioning. |
@@ -57,8 +57,8 @@ PRD §9 caps third-party plugins at 15 for v1, and Commerce Principle 9 requires
 
 ## 6. Version-confirmation checklist (owner/dev-lead action before Phase 1 tooling install)
 
-1. Run `composer create-project roots/sage` (or the then-current Roots install path) in a scratch dir and record the exact Sage/Acorn/Vite/Tailwind versions it scaffolds.
-2. Cross-check against this table; update `docs/adr/0001-sage-version.md` with the VERIFIED versions and a changelog note.
-3. Confirm the chosen managed WordPress host's supported PHP version matches 8.2+ before committing to it in `deployment.md`.
+**COMPLETE — run 2026-10-09.** Outcome: see §2 above and `docs/adr/0001-sage-version.md`.
 
-This checklist exists precisely because this planning session has no live internet access to verify package registries — treat every version above as a starting hypothesis, not a pinned requirement.
+1. ~~Run `composer create-project roots/sage` (or the then-current Roots install path) in a scratch dir and record the exact Sage/Acorn/Vite/Tailwind versions it scaffolds.~~ Done — via a throwaway Docker container (this host has no native PHP/Composer).
+2. ~~Cross-check against this table; update `docs/adr/0001-sage-version.md` with the VERIFIED versions and a changelog note.~~ Done.
+3. Confirm the chosen managed WordPress host's supported PHP version matches **8.3+** (raised from 8.2+) before committing to it in `deployment.md` — still open, hosting itself remains BLOCKED/REQUIRES APPROVAL per ADR 0012.

@@ -8,7 +8,7 @@ Build the `got-commerce` `EarlyAccess` service (validation, honeypot, rate limit
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (plugin service + REST controller), Alpine.js (form state).
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (plugin service + REST controller), Alpine.js (form state).
 **Primary Dependencies**: WordPress REST API, WP-Cron (retry job), chosen email-marketing tool's API client (vendor TBD, ADR 0011).
 **Storage**: New custom table `got_early_access` (ADR 0010).
 **Testing**: Playwright E2E (double opt-in happy path, rate-limit trigger, expired-link path, outage/retry path with a mocked provider); PHP unit tests for the validation/rate-limit/token logic.

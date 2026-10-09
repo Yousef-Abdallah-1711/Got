@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (shared `CheckoutService` validation + this feature's own order-creation call), Alpine.js (form state).
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md) (shared `CheckoutService` validation + this feature's own order-creation call), Alpine.js (form state).
 **Primary Dependencies**: `CheckoutService`'s validation methods, built in Feature 010 (hard dependency for validation only — this feature implements its own `wc_create_order()` call, since it has no cart/Store-API session to delegate to).
 **Storage**: Writes to the same WooCommerce HPOS order tables as the standard checkout — no new storage.
 **Testing**: Full duplicate of the standard-checkout E2E suite with the PDP entry point, plus an explicit regression test asserting both entry points produce byte-identical totals for identical inputs.

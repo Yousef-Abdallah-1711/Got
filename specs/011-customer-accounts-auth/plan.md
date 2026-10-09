@@ -8,7 +8,7 @@
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+/Blade.
+**Language/Version**: PHP 8.3+ (raised 2026-10-09 for Sage 11/Acorn v6, see docs/adr/0001-sage-version.md)/Blade.
 **Primary Dependencies**: WordPress core auth (`wp_signon`, `wp_set_auth_cookie`), WooCommerce My Account endpoints, a login-rate-limiting mechanism (plugin or small custom implementation).
 **Storage**: Native `wp_users`/`wp_usermeta`; no new tables.
 **Testing**: Playwright E2E + explicit security/authorization tests (direct-URL-access, enumeration, lockout, token single-use/expiry).

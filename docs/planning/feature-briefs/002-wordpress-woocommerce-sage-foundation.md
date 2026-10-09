@@ -5,7 +5,7 @@
 # 002 — WordPress, WooCommerce, Sage Foundation
 
 ## Summary
-Provision the hosting environment and install the base platform: WordPress, WooCommerce (HPOS enabled), Roots Sage 10 (pending ADR 0001 verification) on Acorn, Vite, Tailwind, Composer, CI pipeline. This is the prerequisite for every other feature.
+Provision the hosting environment and install the base platform: WordPress, WooCommerce (HPOS enabled), Roots Sage 11 (updated 2026-10-09 — ADR 0001's verification ran and found Sage 10 superseded; owner chose Sage 11) on Acorn v6, Vite, Tailwind v4, Composer, CI pipeline. This is the prerequisite for every other feature.
 
 ## Scope
 **In**: hosting provisioning, DNS/SSL/Cloudflare setup, Sage/Acorn/Vite scaffold, WooCommerce install + HPOS + EGP currency + base store settings, Git repo + GitHub Actions CI (lint/build on PR, auto-deploy to staging), `got-sage` theme skeleton + `got-commerce` plugin skeleton per `docs/architecture/wordpress-structure.md`.

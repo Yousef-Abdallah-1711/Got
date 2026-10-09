@@ -12,10 +12,10 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ## Phase 1: Setup
 
-- [ ] T001 Provision managed WordPress hosting account (PHP 8.2+, MySQL 8/MariaDB 10.6+, HTTPS, staging environment, daily backups) per `docs/adr/0012-hosting-and-caching.md`'s selection criteria
-- [ ] T002 Configure Cloudflare DNS, SSL, and www redirect for the staging subdomain
-- [ ] T003 [P] Initialize the Git repository and push the initial commit (if not already a repository)
-- [ ] T004 [P] Run `composer create-project roots/sage` in a scratch directory and record the exact Sage/Acorn/Vite/Tailwind versions produced; update `docs/adr/0001-sage-version.md` with the VERIFIED versions
+- [ ] T001 Provision managed WordPress hosting account (PHP 8.3+ — raised 2026-10-09 for Sage 11/Acorn v6, MySQL 8/MariaDB 10.6+, HTTPS, staging environment, daily backups) per `docs/adr/0012-hosting-and-caching.md`'s selection criteria — **BLOCKED**: paid hosting provisioning requires the project owner (payment + vendor selection); not something an agent/delegate can execute.
+- [ ] T002 Configure Cloudflare DNS, SSL, and www redirect for the staging subdomain — **BLOCKED**: no staging host exists yet (depends on T001); live DNS changes also require explicit owner action.
+- [x] T003 [P] Initialize the Git repository and push the initial commit (if not already a repository) — **DONE 2026-10-09**: repo initialized, pushed to `https://github.com/Yousef-Abdallah-1711/Got`.
+- [x] T004 [P] Run `composer create-project roots/sage` in a scratch directory and record the exact Sage/Acorn/Vite/Tailwind versions produced; update `docs/adr/0001-sage-version.md` with the VERIFIED versions — **DONE 2026-10-09**: ran via Docker (host has no native PHP/Composer); found Sage 11 (Acorn v6.3.0, Vite ^8, Tailwind v4, PHP >=8.3) is now the installer default, not Sage 10. Owner chose to move to Sage 11 — see ADR 0001.
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 

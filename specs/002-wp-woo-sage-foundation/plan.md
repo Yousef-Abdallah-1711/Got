@@ -6,13 +6,13 @@
 
 ## Summary
 
-Provision a staging environment and install WordPress + WooCommerce (HPOS enabled, EGP currency) on Roots Sage 10/Acorn, with `got-sage` (theme) and `got-commerce` (plugin) skeletons and a GitHub Actions CI pipeline that lints/builds every PR and auto-deploys to staging on merge. This is the prerequisite for every other feature (`docs/planning/dependency-graph.md`).
+Provision a staging environment and install WordPress + WooCommerce (HPOS enabled, EGP currency) on **Roots Sage 11/Acorn v6** (superseded from the originally documented Sage 10 — see `docs/adr/0001-sage-version.md`, ratified 2026-10-09), with `got-sage` (theme) and `got-commerce` (plugin) skeletons and a GitHub Actions CI pipeline that lints/builds every PR and auto-deploys to staging on merge. This is the prerequisite for every other feature (`docs/planning/dependency-graph.md`).
 
 ## Technical Context
 
-**Language/Version**: PHP 8.2+ (Sage 10 / WooCommerce HPOS requirement, per `docs/architecture/tech-stack.md`); Node 20 LTS for the build only (not a runtime dependency).
+**Language/Version**: PHP 8.3+ (Sage 11 / Acorn v6 requirement — raised from the originally documented 8.2+, per `docs/architecture/tech-stack.md` and `docs/adr/0001-sage-version.md`); Node 20 LTS minimum for the build only (Sage 11 engine range is `^20.19.0 || >=22.12.0`), not a runtime dependency.
 
-**Primary Dependencies**: WordPress 6.x, WooCommerce (latest stable), Roots Sage 10 + Acorn, Vite (`@roots/sage` plugin), Tailwind CSS 3.x, Composer 2.x.
+**Primary Dependencies**: WordPress 6.x, WooCommerce (latest stable), Roots Sage 11 + Acorn v6, Vite ^8 (`@roots/vite-plugin` ^2), Tailwind CSS v4 (`@tailwindcss/vite`, CSS-first `@theme` config — not `tailwind.config.js`), Composer 2.x.
 
 **Storage**: MySQL 8 / MariaDB 10.6+ (WordPress core tables + WooCommerce HPOS order tables).
 
