@@ -1,0 +1,5 @@
+interface:
+  display_name: "Developer WordPress From HTML"
+  short_description: "Plan HTML to Sage ACF conversion"
+  default_prompt: "Use $developer-wordpress-from-html to plan a Spec Kit-backed conversion from a static HTML site into a Sage WordPress theme."
+

@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x620" name="Forms — fields, selectors, stepper, early access" subtitle="TextField, Select, Checkbox, Size/Color selectors, Quantity, EarlyAccessForm" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:24px}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:16px}.k{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--got-text-muted);width:84px;flex:none}.split{display:grid;grid-template-columns:1fr 1fr}.split>div{padding:24px;background:var(--got-bg);color:var(--got-text)}</style>
+</head><body><div id="r"></div><script type="text/babel">
+const NS = window.GTDesignSystem_f9e073;
+
+const { TextField, Select, Checkbox, SizeSelector, ColorSelector, QuantityStepper, EarlyAccessForm, Button } = NS;
+function App(){const [s,setS]=React.useState('M');const [c,setC]=React.useState('Black');const [q,setQ]=React.useState(1);
+return <div className="col" style={{gap:20}}>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+<TextField label="Email" placeholder="you@example.com"/>
+<TextField label="Mobile number" defaultValue="0101" error="Enter an Egyptian mobile number, e.g. 010 1234 5678."/>
+<TextField label="Full name" defaultValue="Karim Adel" success="Looks good."/>
+<Select label="Governorate" options={['Alexandria','Cairo','Giza']}/>
+</div>
+<div style={{display:'grid',gridTemplateColumns:'1.3fr 1fr',gap:24,alignItems:'start'}}>
+<SizeSelector sizes={[{label:'S'},{label:'M'},{label:'L',available:false},{label:'XL'},{label:'XXL'}]} value={s} onChange={setS} aside={<Button variant="link" size="sm">Size guide</Button>}/>
+<ColorSelector colors={[{name:'Black',hex:'#0B0B0B'},{name:'Steel',hex:'#777777'}]} value={c} onChange={setC}/>
+</div>
+<div className="row" style={{gap:24}}><QuantityStepper value={q} max={3} onChange={setQ}/><Checkbox label="Email me about Drop 01." defaultChecked/><Checkbox label="Disabled" disabled/></div>
+<EarlyAccessForm/>
+</div>}
+ReactDOM.createRoot(document.getElementById('r')).render(<App/>);
+</script></body></html>

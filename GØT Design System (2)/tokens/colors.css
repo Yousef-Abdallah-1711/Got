@@ -1,0 +1,31 @@
+/* Brand palette (GOT_Complete_Brand_Identity §4.2) — recommended approximations, not measured ink */
+:root{
+--got-obsidian:#080808;--got-packaging:#111111;--got-graphite:#202020;--got-rule:#303030;--got-steel:#777777;--got-silver:#BFC0C2;--got-offwhite:#F2F2F0;--got-white:#FFFFFF;--got-lime:#C2FF3D;--got-elevated:#141414;--got-offwhite-2:#F4F4F1;
+--got-paper:#E6E6E4;--got-paper-rule:#D0D0CE;--got-ink-muted:#555555;--got-gunmetal:#3A3A3C;--got-ash:#A3A3A3;
+/* status bases (DESIGN.md §3 asks for contrast-tested per-theme statuses) */
+--got-red-400:#FF7A6E;--got-red-700:#B3261E;--got-green-400:#6FCF8E;--got-green-700:#1E7A3C;--got-amber-400:#E8B85A;--got-amber-700:#8A5A00;
+}
+/* Semantic — dark is the default cinematic identity */
+:root{
+color-scheme:dark;
+--got-bg:var(--got-obsidian);--got-surface:var(--got-elevated);--got-surface-2:var(--got-graphite);--got-border:var(--got-rule);--got-border-strong:#4A4A4A;
+--got-text:var(--got-offwhite);--got-text-muted:var(--got-ash);--got-accent:var(--accent-ink);--got-logo:var(--got-white);
+--accent:var(--got-lime);--on-accent:var(--got-obsidian);--accent-ink:var(--got-lime);--got-cta-bg:var(--accent);--got-cta-text:var(--on-accent);--got-cta-bg-hover:var(--got-white);
+--color-link:var(--got-offwhite);--color-focus:var(--got-lime);--color-error:var(--got-red-400);--color-success:var(--got-green-400);--color-warning:var(--got-amber-400);
+--color-disabled:#5C5C5C;--color-disabled-bg:#1A1A1A;--color-overlay:rgba(8,8,8,.72);--color-input-bg:var(--got-graphite);--color-on-image:var(--got-white);
+--color-skeleton:#1C1C1C;--color-skeleton-hi:#262626;--color-selection:var(--got-silver);--color-selection-text:var(--got-obsidian);
+--text-body:var(--got-text);--text-muted:var(--got-text-muted);--surface-page:var(--got-bg);--surface-card:var(--got-surface);--surface-inset:var(--got-surface-2);
+}
+[data-theme="light"]{
+color-scheme:light;
+--got-bg:var(--got-offwhite-2);--got-surface:var(--got-white);--got-surface-2:#E9E9E5;--got-border:var(--got-paper-rule);--got-border-strong:#9A9A98;
+--got-text:var(--got-obsidian);--got-text-muted:var(--got-ink-muted);--got-accent:var(--accent-ink);--got-logo:var(--got-obsidian);
+--accent-ink:#3D5200;--got-cta-bg:var(--accent);--got-cta-text:var(--on-accent);--got-cta-bg-hover:var(--got-obsidian);
+--color-link:var(--got-obsidian);--color-focus:var(--got-obsidian);--color-error:var(--got-red-700);--color-success:var(--got-green-700);--color-warning:var(--got-amber-700);
+--color-disabled:#9A9A98;--color-disabled-bg:#E6E6E4;--color-overlay:rgba(8,8,8,.48);--color-input-bg:var(--got-white);--color-on-image:var(--got-white);
+--color-skeleton:#E2E2E0;--color-skeleton-hi:#EBEBE9;--color-selection:var(--got-obsidian);--color-selection-text:var(--got-offwhite);
+--text-body:var(--got-text);--text-muted:var(--got-text-muted);--surface-page:var(--got-bg);--surface-card:var(--got-surface);--surface-inset:var(--got-surface-2);
+}
+/* Accent comparison: brand-doc silver instead of proposed Acid Lime (set html[data-accent="silver"]) */
+[data-accent="silver"]{--accent:var(--got-silver);--accent-ink:var(--got-silver);--color-focus:var(--got-silver)}
+[data-accent="silver"][data-theme="light"]{--accent-ink:var(--got-gunmetal);--color-focus:var(--got-gunmetal)}

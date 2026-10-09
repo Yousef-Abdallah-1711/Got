@@ -1,0 +1,102 @@
+<!-- @startingPoint section="Storefront" subtitle="Product detail: gallery, size/colour, add to cart" viewport="1280x800" -->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GØT — Storefront UI kit</title>
+<link rel="stylesheet" href="../../styles.css?v=20261008-marquee1">
+<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="product.css">
+<script>try{var t=localStorage.getItem('got-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}window.__GOT_START="product";</script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js?v=20261008-marquee1"></script>
+<script src="data.js"></script>
+<script src="wishlist-store.js?v=20261008-wishlist2"></script>
+<script src="home-content.js"></script>
+<script src="image-slot.js"></script>
+<style>.kitnav{position:fixed;left:16px;bottom:16px;z-index:90;display:flex;gap:2px;padding:4px;background:var(--got-surface);border:1px solid var(--got-border);box-shadow:var(--shadow-panel)}.kitnav button{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:8px 10px;background:none;border:0;color:var(--got-text-muted);cursor:pointer}.kitnav button[aria-pressed="true"]{background:var(--got-cta-bg);color:var(--got-cta-text)}.kit-status{display:flex;align-items:center;white-space:nowrap;padding:0 10px;border-right:1px solid var(--got-border);font:500 9px/1.3 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--got-text-muted)}</style>
+</head><body><a class="got-skip" href="#main">Skip to content</a><div id="root"></div>
+<script type="text/babel" src="ComingSoon.jsx?v=20261008"></script>
+<script type="text/babel" src="HomeSections.jsx?v=20261008-wishlist2"></script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="Shop.jsx"></script>
+<script type="text/babel" src="DirectCheckout.jsx"></script>
+<script type="text/babel" src="Promo.jsx"></script>
+<script type="text/babel" src="Wishlist.jsx?v=20261008-wishlist2"></script>
+<script type="text/babel" src="Product.jsx?v=20261008-wishlist2"></script>
+<script type="text/babel" src="Checkout.jsx"></script>
+<script type="text/babel" src="Confirmation.jsx"></script>
+<script type="text/babel" src="Account.jsx"></script>
+<script type="text/babel" src="ThankYou.jsx"></script>
+<script type="text/babel">
+const { Header, AnnouncementBar, Footer, CartDrawer, Notice, Button } = window.GTDesignSystem_f9e073;
+function App() {
+  const [screen, setScreen] = React.useState(window.__GOT_START || new URLSearchParams(window.location.search).get('screen') || localStorage.getItem('got-kit-screen') || 'home');
+  const [theme, setThemeS] = React.useState(document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  const [product, setProduct] = React.useState(window.GOT_PRODUCTS[0]);
+  const [cart, setCart] = React.useState([]);
+  const [drawer, setDrawer] = React.useState(false);
+  const [toast, setToast] = React.useState(null);
+  const [order, setOrder] = React.useState(null);
+  const [shopTab, setShopTab] = React.useState('All');
+  const [menu, setMenu] = React.useState(false);
+  const [search, setSearch] = React.useState(false);
+  const wishlistStore = window.GOT_WISHLIST;
+  const [wishIds, setWishIds] = React.useState(() => wishlistStore.read());
+  const wishIdsRef = React.useRef(wishIds);
+  const [wishError, setWishError] = React.useState('');
+  const [retryWishIds, setRetryWishIds] = React.useState(null);
+  const [showSlots, setShowSlots] = React.useState(false);
+  const [compact, setCompact] = React.useState(false);
+  const [accent, setAccent] = React.useState('lime');
+  React.useEffect(() => { const s = () => setCompact(window.scrollY > 80); s(); window.addEventListener('scroll', s, { passive: true }); return () => window.removeEventListener('scroll', s); }, []);
+  React.useEffect(() => { if (accent === 'lime') delete document.documentElement.dataset.accent; else document.documentElement.dataset.accent = accent; }, [accent]);
+  React.useEffect(() => {
+    const onStorage = e => { if (e.key !== wishlistStore.key) return; const next = wishlistStore.parse(e.newValue); wishIdsRef.current = next; setWishIds(next); setRetryWishIds(null); setWishError(''); };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+  React.useEffect(() => { const onPopState = () => setScreen(new URLSearchParams(window.location.search).get('screen') || 'home'); window.addEventListener('popstate', onPopState); return () => window.removeEventListener('popstate', onPopState); }, []);
+  const commitWishlist = next => {
+    const normalized = wishlistStore.normalize(next);
+    if (!wishlistStore.save(normalized)) { setRetryWishIds(normalized); setWishError('Your wishlist could not be saved on this device. Check browser storage and try again.'); return false; }
+    wishIdsRef.current = normalized; setWishIds(normalized); setRetryWishIds(null); setWishError(''); return true;
+  };
+  const retryWishlistSave = () => { if (retryWishIds && commitWishlist(retryWishIds)) setWishMsg('Wishlist saved on this device.'); };
+  const [wishMsg, setWishMsg] = React.useState('');
+  const wish = p => ({ wishlisted: wishIds.includes(p.id), onWishlist: () => { const current = wishIdsRef.current; const has = current.includes(p.id); const next = has ? current.filter(id => id !== p.id) : [...current, p.id]; if (commitWishlist(next)) setWishMsg((has ? 'Removed ' + p.name + ' from' : 'Saved ' + p.name + ' to') + ' wishlist. ' + next.length + ' saved.'); } });
+  const setTheme = t => { document.documentElement.dataset.theme = t; try { localStorage.setItem('got-theme', t); } catch (e) {} setThemeS(t); };
+  React.useEffect(() => { document.documentElement.dataset.theme = theme; }, []);
+  const go = (s, cat) => { if (s === 'shop') setShopTab(cat || 'All'); setScreen(s); setMenu(false); setSearch(false); setDrawer(false); try { localStorage.setItem('got-kit-screen', s); } catch (e) {} try { window.history.pushState({ screen: s }, '', '?screen=' + encodeURIComponent(s)); } catch (e) {} window.scrollTo(0, 0); };
+  const openProduct = p => { setProduct(p); go('product'); };
+  const addToCart = item => {
+    setCart(c => { const ex = c.find(i => i.id === item.id); return ex ? c.map(i => i.id === item.id ? { ...i, qty: Math.min(i.max, i.qty + item.qty) } : i) : [...c, item]; });
+    setDrawer(true); setToast(item);
+    setTimeout(() => setToast(null), 3200);
+  };
+  const count = cart.reduce((a, i) => a + i.qty, 0);
+  const nav = [{ label: 'Shop', key: 'shop' }, { label: 'Hoodies', key: 'shop', cat: 'Hoodies' }, { label: 'Accessories', key: 'shop', cat: 'Accessories' }, { label: 'About', key: 'home' }].map(n => ({ ...n, current: screen === 'shop' && n.key === 'shop' && (n.cat || 'All') === shopTab }));
+  const screens = [['coming', 'Coming soon'], ['home', 'Home'], ['shop', 'Shop'], ['product', 'Product'], ['checkout', 'Checkout'], ['thanks', 'Thank you'], ['confirm', 'Tracking'], ['wishlist', 'Wishlist'], ['account', 'Account']];
+  let body;
+  if (screen === 'coming') body = <ComingSoon theme={theme} setTheme={setTheme} go={go} />;
+  else {
+    const inner = screen === 'home' ? <Home go={go} openProduct={openProduct} addToCart={addToCart} wish={wish} showSlots={showSlots} /> : screen === 'shop' ? <Shop key={shopTab} initialTab={shopTab} openProduct={openProduct} wish={wish} /> : screen === 'product' ? <Product key={product.id} product={product} addToCart={addToCart} go={go} openProduct={openProduct} wish={wish} /> : screen === 'checkout' ? <Checkout cart={cart} /> : screen === 'thanks' ? <ThankYou order={order} go={go} /> : screen === 'wishlist' ? <Wishlist ids={wishIds} products={window.GOT_PRODUCTS} wish={wish} go={go} openProduct={openProduct} addToCart={addToCart} clear={() => { if (commitWishlist([])) { setWishMsg('Wishlist cleared.'); return true; } return false; }} remove={id => commitWishlist(wishIdsRef.current.filter(x => x !== id))} /> : screen === 'account' ? <Account go={go} openProduct={openProduct} wishlist={window.GOT_PRODUCTS.filter(p => wishIds.includes(p.id))} wish={wish} /> : <Confirmation order={order} go={go} />;
+    const checkout = screen === 'checkout';
+    body = <>
+      {!checkout && <AnnouncementBar messages={window.GOT_HOME.announcements} onSelect={m => m.key && go(m.key)} />}
+      <Header mode={checkout ? 'checkout' : 'store'} layout="auto" sticky compact={compact} nav={nav} onNav={n => go(n.key, n.cat)} onMenu={() => setMenu(true)} cartCount={count} theme={theme} onToggleTheme={setTheme} onCart={() => setDrawer(true)} onLogo={() => go('home')} onSearch={() => setSearch(true)} wishCount={wishIds.length} onWishlist={() => go('wishlist')} onAccount={() => go('account')} />
+      <div id="main">{inner}</div>
+      {!checkout && <Footer onLink={() => go('shop')} />}
+    </>;
+  }
+  return <>
+    {body}
+    <CartDrawer open={drawer} items={cart} onClose={() => setDrawer(false)} onQty={(id, q) => setCart(c => c.map(i => i.id === id ? { ...i, qty: q } : i))} onRemove={id => setCart(c => c.filter(i => i.id !== id))} onCheckout={() => go('checkout')} onViewCart={() => go('checkout')} onShop={() => go('shop')} />
+    <div className="got-sr" aria-live="polite" role="status">{wishMsg}</div>
+    {wishError && <div className="got-wishlist-error"><Notice tone="error" title="Wishlist not saved" action={<Button size="sm" variant="secondary" onClick={retryWishlistSave}>Retry</Button>}>{wishError}</Notice></div>}
+    <MobileMenu open={menu} onClose={() => setMenu(false)} go={go} nav={nav} />
+    <SearchOverlay open={search} onClose={() => setSearch(false)} openProduct={openProduct} wish={wish} />
+    {toast && !drawer && <div style={{ position: 'fixed', right: 16, bottom: 72, zIndex: 80, width: 'min(360px, calc(100vw - 32px))' }}><Notice toast tone="success" title="Added to cart" onDismiss={() => setToast(null)}>{toast.name} — {toast.variant}</Notice></div>}
+    <div className="kitnav" role="group" aria-label="UI kit screens"><span className="kit-status" aria-label="Prototype with sample store data">Preview · sample data</span>{screens.map(([k, l]) => <button key={k} aria-pressed={screen === k} onClick={() => go(k)}>{l}</button>)}<label className="kit-cms"><input type="checkbox" checked={accent === 'lime'} onChange={e => setAccent(e.target.checked ? 'lime' : 'silver')} />Lime accent</label>{screen === 'home' && <label className="kit-cms"><input type="checkbox" checked={showSlots} onChange={e => setShowSlots(e.target.checked)} />Show CMS slots</label>}</div>
+  </>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

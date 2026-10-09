@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "developer-wordpress-from-html": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "developer-wordpress-from-html/SKILL.md",
+      "computedHash": "ee24007eff6a75798b5c73bf1c0432421652320fd2500abe6126beee5e461ea9"
+    },
+    "html-to-sage": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": ".codex/skills/html-to-sage/SKILL.md",
+      "computedHash": "ea3d7d6c3403ee90e92bbbb092dd28dfc64e869c611a0ba8734330c93bda8ad2"
+    },
+    "html-to-wordpress": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": ".codex/skills/html-to-wordpress/SKILL.md",
+      "computedHash": "0830a4ee95f3f05efc6b4f48aa110a485ed810cfaaab7c1be7ec474ec659f35b"
+    },
+    "html-to-wordpress-acf-block-mapper": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/acf-block-mapper/SKILL.md",
+      "computedHash": "863b978e093d4418abf2ae1abeaeeb8871f69686e57a3d6e0433581bfa10ef76"
+    },
+    "html-to-wordpress-cpt-taxonomy-modeler": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/cpt-taxonomy-modeler/SKILL.md",
+      "computedHash": "c449e007dc31f1d786f47fa1641dd2486dcc82c287b6fd9f8f206554d0a1b043"
+    },
+    "html-to-wordpress-html-audit": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/html-audit/SKILL.md",
+      "computedHash": "045ee0301dda2cf9072442d24c72588953973f0c4a551ccc825a8cf296e5fea0"
+    },
+    "html-to-wordpress-intake": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/intake/SKILL.md",
+      "computedHash": "e684deb3eaf7877b2f4072a05ab224292a71d4a0dbaa103a3a5beba2faeaac44"
+    },
+    "html-to-wordpress-sage-setup": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/sage-setup/SKILL.md",
+      "computedHash": "31dc6c94afa76a4c1d86bd705290213cfb01b16e74f098e66e3e7290cf0f3ea4"
+    },
+    "html-to-wordpress-speckit-bridge": {
+      "source": "yousefabdallah171/html-to-wordpress-converter",
+      "sourceType": "github",
+      "skillPath": "subskills/speckit-bridge/SKILL.md",
+      "computedHash": "8a3cf77c27bd50c36ce567aea6c288279fa0bf5bbd495dd5e1d53694126c95a2"
+    }
+  }
+}

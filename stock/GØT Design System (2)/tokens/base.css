@@ -1,0 +1,19 @@
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--got-bg);color:var(--got-text);font-family:var(--font-body);font-size:var(--fs-body);line-height:var(--lh-body);-webkit-font-smoothing:antialiased}
+::selection{background:var(--color-selection);color:var(--color-selection-text)}
+a{color:var(--color-link);text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:var(--focus-w) solid var(--color-focus);outline-offset:var(--focus-offset)}
+img{max-width:100%;display:block}
+.got-display{font-family:var(--font-display);font-size:var(--fs-display);line-height:var(--lh-display);font-weight:var(--fw-bold);letter-spacing:var(--tracking-display);text-transform:uppercase;margin:0;text-wrap:balance}
+.got-h1{font-family:var(--font-display);font-size:var(--fs-h1);line-height:var(--lh-h1);font-weight:var(--fw-semibold);letter-spacing:var(--tracking-heading);text-transform:uppercase;margin:0;text-wrap:balance}
+.got-h2{font-family:var(--font-display);font-size:var(--fs-h2);line-height:var(--lh-h2);font-weight:var(--fw-semibold);letter-spacing:var(--tracking-heading);margin:0;text-wrap:balance}
+.got-h3{font-family:var(--font-display);font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:var(--fw-medium);margin:0}
+.got-body{font-size:var(--fs-body);line-height:var(--lh-body);max-width:var(--measure);text-wrap:pretty}
+.got-small{font-size:var(--fs-small);line-height:var(--lh-small);color:var(--got-text-muted)}
+.got-eyebrow{font-family:var(--font-mono);font-size:var(--fs-eyebrow);line-height:var(--lh-eyebrow);font-weight:var(--fw-medium);letter-spacing:var(--tracking-mono);text-transform:uppercase;color:var(--got-text-muted)}
+.got-label{font-family:var(--font-body);font-size:var(--fs-label);font-weight:var(--fw-semibold);letter-spacing:var(--tracking-label);text-transform:uppercase}
+.got-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.got-skip{position:absolute;left:var(--space-4);top:-100px;background:var(--got-cta-bg);color:var(--got-cta-text);padding:var(--space-3) var(--space-4);z-index:100}
+.got-skip:focus{top:var(--space-4)}

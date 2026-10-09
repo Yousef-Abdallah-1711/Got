@@ -1,0 +1,25 @@
+{
+  "version": "0.15.2",
+  "integration_state_schema": 1,
+  "installed_integrations": [
+    "claude",
+    "codex",
+    "kimi"
+  ],
+  "integration_settings": {
+    "claude": {
+      "script": "ps",
+      "invoke_separator": "-"
+    },
+    "codex": {
+      "script": "ps",
+      "invoke_separator": "-"
+    },
+    "kimi": {
+      "script": "ps",
+      "invoke_separator": "-"
+    }
+  },
+  "integration": "claude",
+  "default_integration": "claude"
+}

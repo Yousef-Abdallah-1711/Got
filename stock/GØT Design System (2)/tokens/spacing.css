@@ -1,0 +1,10 @@
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-16:64px;--space-24:96px;--space-32:128px;
+--gutter:20px; /* @kind spacing */--content-max:1440px; /* @kind spacing */--header-h:64px; /* @kind spacing */--hit:44px; /* @kind spacing */
+--radius-0:0;--radius-control:2px;--radius-card:4px;--radius-pill:999px;
+--border-w:1px;--focus-w:2px;--focus-offset:2px;
+--bp-tablet:640px; /* @kind other */--bp-desktop:1024px; /* @kind other */--bp-wide:1440px; /* @kind other */
+--ratio-card:4/5; /* @kind other */--ratio-hero:16/9; /* @kind other */
+}
+@media (min-width:640px){:root{--gutter:32px; /* @kind spacing */--header-h:72px}}
+@media (min-width:1024px){:root{--gutter:56px; /* @kind spacing */--header-h:80px}}

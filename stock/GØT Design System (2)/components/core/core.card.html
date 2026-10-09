@@ -1,0 +1,19 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Core — Button, IconButton, Badge, Icon, Wordmark" subtitle="CTA variants, sizes, states; icon set; badges" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{padding:24px}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:16px}.k{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--got-text-muted);width:84px;flex:none}.split{display:grid;grid-template-columns:1fr 1fr}.split>div{padding:24px;background:var(--got-bg);color:var(--got-text)}</style>
+</head><body><div id="r"></div><script type="text/babel">
+const NS = window.GTDesignSystem_f9e073;
+
+const { Button, IconButton, Badge, Icon, Wordmark, ICON_NAMES } = NS;
+ReactDOM.createRoot(document.getElementById('r')).render(<div className="col">
+<div className="row"><span className="k">Variant</span><Button>Add to cart</Button><Button variant="secondary" arrow>Shop Drop 01</Button><Button variant="ghost" iconLeft="search">Search</Button><Button variant="link">Size guide</Button></div>
+<div className="row"><span className="k">State</span><Button loading>Adding</Button><Button disabled>Select size</Button><Button size="sm">Small 44</Button><Button size="lg">Large 56</Button></div>
+<div className="row"><span className="k">Icon btn</span><IconButton icon="shopping-bag" label="Cart" count={2}/><IconButton icon="search" label="Search"/><IconButton icon="user" label="Account"/><IconButton icon="x" label="Close" variant="outline"/><IconButton icon="heart" label="Wishlist" disabled/></div>
+<div className="row"><span className="k">Badge</span><Badge tone="new">New</Badge><Badge tone="soldout">Sold out</Badge><Badge tone="drop">Drop 01</Badge><Badge>EST. 2026</Badge><Badge tone="outline" pill>XL</Badge><span style={{marginLeft:'auto'}}><Wordmark size={28}/></span></div>
+<div className="row" style={{gap:14,color:'var(--got-text-muted)'}}><span className="k">Icons</span>{ICON_NAMES.slice(0,22).map(n=><Icon key={n} name={n} size={18}/>)}</div>
+</div>);
+</script></body></html>
