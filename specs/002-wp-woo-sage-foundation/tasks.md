@@ -26,13 +26,13 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 - [x] T005b Scaffold the empty `framework/` layer directories inside `got-sage` — `framework/builder/` (used by Feature 004), `framework/custom-fields/`, `framework/post-type/`, `framework/taxonomies/` — per the constitution's Sage Architecture Enforcement principle, so later features have a consistent place to register ACF fields/CPTs/taxonomies rather than inventing ad hoc locations — **migrated from the retired Feature 001's T004** — **DONE 2026-10-09**.
 - [x] T006 [P] Scaffold `wp-content/plugins/got-commerce/` with `got-commerce.php` plugin header and an empty `src/` PSR-4 namespace — **DONE 2026-10-09**: `composer install` verified exit 0.
 - [x] T007 [P] Configure Vite entry points (`resources/css/app.css`, `resources/js/app.js`) in `got-sage` per `docs/architecture/wordpress-structure.md` — **DONE 2026-10-09**: Vite build verified producing `public/build/assets/app-*.css`/`.js` + manifest.
-- [~] T008 Install WordPress on the staging environment; install WooCommerce; set store currency to EGP and base country to Egypt — **PARTIAL, local substitute 2026-10-09**: no staging exists (T001/T002 blocked), so this ran against the project owner's local "Local by WP Engine" site (`http://got.local`) instead. WordPress already running there; WooCommerce 11.2.0 installed and activated via live admin automation; General settings saved with Country/State = Egypt — Cairo, Currency = Egyptian pound (EGP), both verified persisted after reload. Staging-specific verification still blocked until T001 unblocks.
+- [~] T008 Install WordPress on the staging environment; install WooCommerce; set store currency to EGP and base country to Egypt — **IN PROGRESS — local substitute verified 2026-10-09**: no staging exists (T001/T002 blocked), so this ran against the project owner's local "Local by WP Engine" site (`http://got.local`) instead. WordPress already running there; WooCommerce 11.2.0 installed and activated via live admin automation; General settings saved with Country/State = Egypt — Cairo, Currency = Egyptian pound (EGP), both verified persisted after reload. Staging-specific verification still blocked until T001 unblocks. Staging-specific verification remains **BLOCKED** by T001/T002.
 - [x] T008a Configure WooCommerce tax settings per the brand owner's accountant's direction (tax status, rate, and whether prices are entered tax-inclusive) — **remediates a gap found during the cross-feature audit: tax configuration was named in the PRD's own Phase 1 task list but had no owner in any of the 16 original features' tasks**; if the accountant's direction is not yet available, configure WooCommerce's tax calculation as explicitly disabled (not a silent default) and track the real decision in `docs/planning/UPDATED-RISKS-AND-DECISIONS.md` rather than guessing a rate — **DONE 2026-10-09**: verified "Enable tax rates and calculations" is unchecked (disabled) by default; already tracked in the risks doc (line 54), no accountant direction received yet.
-- [x] T009 Enable WooCommerce High-Performance Order Storage (HPOS) in Settings → Advanced → Features before any product/order data is created — **DONE 2026-10-09**: verified "High-performance order storage (recommended)" is the pre-selected default on this WooCommerce version — no action needed, confirmed via live admin check, not assumed.
-- [ ] T009a Build the Site Mode admin settings screen (`got_manage_site_mode` capability, Administrator/Shop Manager only): current-mode display, published-product count, the ≥1-published-in-stock-product guard blocking the Coming-Soon→Store switch, cache purge on change, and an activity-log write with actor+timestamp (PRD P0-F001) — **remediates a gap found while building `docs/planning/REQUIREMENTS-TRACEABILITY-MATRIX.md`: every other feature (003, 005, 010) treated this switch as a dependency to read, but no feature previously owned building it**
-- [ ] T009b `SiteMode.php` (theme) exposes a read-only getter consumed by Feature 003's header-variant logic and Feature 005/006's homepage branch — the getter reads the option T009a's settings screen writes; no feature other than this one writes that option (theme/plugin boundary: the plugin owns the flag, the theme only reads it)
-- [ ] T010 [P] Configure `.github/workflows/ci.yml`: PHPStan (level 6+), PHPCS (WordPress Coding Standards), Stylelint, ESLint, and `npm run build` on every pull request
-- [ ] T011 Configure the staging auto-deploy step (on merge to `main`) and the production manual-approval deploy step in the same or a companion workflow file
+- [~] T009 Enable WooCommerce High-Performance Order Storage (HPOS) in Settings → Advanced → Features before any product/order data is created — **IN PROGRESS — local substitute verified 2026-10-09**: verified "High-performance order storage (recommended)" is the pre-selected default on this WooCommerce version — no action needed, confirmed via live admin check, not assumed. Staging confirmation remains **BLOCKED** by T001/T002.
+- [ ] T009a Build the Site Mode admin settings screen (`got_manage_site_mode` capability, Administrator/Shop Manager only): current-mode display, published-product count, the ≥1-published-in-stock-product guard blocking the Coming-Soon→Store switch, cache purge on change, and an activity-log write with actor+timestamp (PRD P0-F001) — **remediates a gap found while building `docs/planning/REQUIREMENTS-TRACEABILITY-MATRIX.md`: every other feature (003, 005, 010) treated this switch as a dependency to read, but no feature previously owned building it** — **IN PROGRESS (2026-10-10)**: implementation, PHP 8.3 lint, 66/66 harness checks, and final Codex review pass. Live Edge checks pass for administrator access, counts, zero-stock guard, successful mode changes, audit persistence, and missing POST nonce rejection; console errors are empty. Shop Manager/unauthorized-account browser checks are **BLOCKED** pending approval to create temporary test accounts. Full-page cache purge verification is **BLOCKED** until a cache provider is selected.
+- [ ] T009b `SiteMode.php` (theme) exposes a read-only getter consumed by Feature 003's header-variant logic and Feature 005/006's homepage branch — the getter reads the option T009a's settings screen writes; no feature other than this one writes that option (theme/plugin boundary: the plugin owns the flag, the theme only reads it) — **NOT STARTED** (sequenced after T009a acceptance).
+- [ ] T010 [P] Configure `.github/workflows/ci.yml`: PHPStan (level 6+), PHPCS (WordPress Coding Standards), Stylelint, ESLint, and `npm run build` on every pull request — **NOT STARTED** (sequenced after the T009a acceptance gate).
+- [ ] T011 Configure the staging auto-deploy step (on merge to `main`) and the production manual-approval deploy step in the same or a companion workflow file — **BLOCKED**: staging host, deployment target, and credentials are unavailable; depends on T001/T002 and owner selection.
 - [x] T012 [P] Write `README.md` covering: prerequisites, local setup steps, how to run tests, how to deploy — **DONE 2026-10-09**.
 - [x] T012a Configure `.gitignore` to exclude local agent folders (`.claude/`, `.agents/`, `.specify/presets` caches), `node_modules/`, `vendor/`, and build outputs (`public/build/`) unless a specific file is intentionally committed — **migrated from the retired Feature 001's T032** — **DONE 2026-10-09**.
 
@@ -44,9 +44,9 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ### Implementation for User Story 1
 
-- [x] T013 [US1] Activate `got-sage` theme and `got-commerce` plugin on staging — **DONE 2026-10-09** (local substitute): owner bumped Local's site PHP to 8.3.17 and installed ACF Pro; both `got-sage` and `got-commerce` now show Active in wp-admin, verified via live browser automation. Found and fixed three real bugs blocking this along the way (see commit `1241414`): `ThemeServiceProvider` wasn't extending the real `SageServiceProvider`, the committed `composer.lock` was generated under PHP 8.5 and baked in an overly strict `>=8.4.1` platform check, and `resources/views/` had zero views causing indefinite hangs instead of a clean render.
-- [ ] T014 [US1] Verify HTTPS with no mixed-content warnings on the staging URL — still blocked, no staging exists (T001/T002). Local dev is plain HTTP by design; not equivalent to this check.
-- [x] T015 [US1] Verify the homepage renders without a PHP fatal error with the default (unstyled) theme — **DONE 2026-10-09**: verified live at `http://got.local/` — HTTP 200, placeholder content renders, confirmed via screenshot, second request 0.18s (healthy, not hanging).
+- [~] T013 [US1] Activate `got-sage` theme and `got-commerce` plugin on staging — **IN PROGRESS — local substitute verified 2026-10-09**: owner bumped Local's site PHP to 8.3.17 and installed ACF Pro; both `got-sage` and `got-commerce` now show Active in wp-admin, verified via live browser automation. Found and fixed three real bugs blocking this along the way (see commit `1241414`): `ThemeServiceProvider` wasn't extending the real `SageServiceProvider`, the committed `composer.lock` was generated under PHP 8.5 and baked in an overly strict `>=8.4.1` platform check, and `resources/views/` had zero views causing indefinite hangs instead of a clean render. Staging activation remains **BLOCKED** by T001/T002.
+- [ ] T014 [US1] Verify HTTPS with no mixed-content warnings on the staging URL — still blocked, no staging exists (T001/T002). Local dev is plain HTTP by design; not equivalent to this check. — **BLOCKED**: no staging URL exists; local HTTP is not equivalent to HTTPS verification.
+- [~] T015 [US1] Verify the homepage renders without a PHP fatal error with the default (unstyled) theme — **IN PROGRESS — local substitute verified 2026-10-09**: verified live at `http://got.local/` — HTTP 200, placeholder content renders, confirmed via screenshot, second request 0.18s (healthy, not hanging). Staging render verification remains **BLOCKED** by T001/T002.
 
 **Checkpoint**: User Story 1 is independently testable on the local substitute — staging-specific verification (T014, and the hosting/DNS tasks) remains blocked pending T001/T002.
 
@@ -58,13 +58,13 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ### Tests for User Story 2
 
-- [ ] T016 [P] [US2] Open a throwaway PR with a deliberate PHPCS violation; confirm the check fails and blocks merge
-- [ ] T017 [P] [US2] Fix the violation; confirm the check passes
+- [ ] T016 [P] [US2] Open a throwaway PR with a deliberate PHPCS violation; confirm the check fails and blocks merge — **NOT STARTED** (depends on T010 and configured GitHub CI).
+- [ ] T017 [P] [US2] Fix the violation; confirm the check passes — **NOT STARTED** (depends on T010 and T016).
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Confirm merge to `main` triggers an automatic staging deploy (verify the change appears on the staging URL)
-- [ ] T019 [US2] Confirm the production deploy workflow requires a manual approval gate and does not fire automatically on merge
+- [ ] T018 [US2] Confirm merge to `main` triggers an automatic staging deploy (verify the change appears on the staging URL) — **BLOCKED** by missing staging host and T011 deployment configuration.
+- [ ] T019 [US2] Confirm the production deploy workflow requires a manual approval gate and does not fire automatically on merge — **NOT STARTED** (depends on T011 and configured deployment environment).
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
@@ -76,8 +76,8 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ### Implementation for User Story 3
 
-- [ ] T020 [US3] Have a second person (or a fresh-eyes self-review after a break) follow `README.md` only, with no questions asked, to reach a working local environment
-- [ ] T021 [US3] Fix any gap found in T020 and re-verify
+- [ ] T020 [US3] Have a second person (or a fresh-eyes self-review after a break) follow `README.md` only, with no questions asked, to reach a working local environment — **NOT STARTED** (User Story 3 follows the User Story 1 gate).
+- [ ] T021 [US3] Fix any gap found in T020 and re-verify — **NOT STARTED** (depends on T020).
 
 **Checkpoint**: All three user stories independently functional.
 
@@ -85,9 +85,9 @@ description: "Task list for Feature 002 — WordPress, WooCommerce, and Sage Fou
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T022 [P] Document the hosting/version decisions actually used in `docs/adr/0001-sage-version.md` and `docs/adr/0012-hosting-and-caching.md` (mark VERIFIED, not PROPOSED)
-- [ ] T023 Run `docs/architecture/wordpress-structure.md`'s WordPress Clone Readiness checklist against the empty skeleton (valid theme header, functions.php bootstrap, no stock skill-repo folder under `wp-content/themes`)
-- [ ] T024 Run quickstart.md validation end to end
+- [ ] T022 [P] Document the hosting/version decisions actually used in `docs/adr/0001-sage-version.md` and `docs/adr/0012-hosting-and-caching.md` (mark VERIFIED, not PROPOSED) — **BLOCKED** for hosting/caching decisions by T001/T002; Sage version verification is already recorded in ADR 0001.
+- [ ] T023 Run `docs/architecture/wordpress-structure.md`'s WordPress Clone Readiness checklist against the empty skeleton (valid theme header, functions.php bootstrap, no stock skill-repo folder under `wp-content/themes`) — **NOT STARTED** (deferred until the remaining foundation gates are resolved).
+- [ ] T024 Run quickstart.md validation end to end — **NOT STARTED** (deferred until the remaining foundation gates are resolved).
 
 ## Dependencies & Execution Order
 

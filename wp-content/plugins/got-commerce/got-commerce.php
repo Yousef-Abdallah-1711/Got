@@ -10,3 +10,7 @@
 if (! defined('ABSPATH')) {
     exit;
 }
+
+require_once __DIR__ . '/src/SiteMode/SiteMode.php';
+
+GOT\Commerce\SiteMode\SiteMode::register();
