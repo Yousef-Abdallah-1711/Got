@@ -1,28 +1,18 @@
 <?php
+/**
+ * Register theme-specific Acorn services.
+ *
+ * @package GOT_Sage
+ */
 
 namespace App\Providers;
 
 use Roots\Acorn\Sage\SageServiceProvider;
 
-class ThemeServiceProvider extends SageServiceProvider
-{
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        parent::register();
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
+/**
+ * Extend the Sage theme service provider.
+ *
+ * @package GOT_Sage
+ */
+class ThemeServiceProvider extends SageServiceProvider {
 }

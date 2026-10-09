@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [wordpressPlugin(), tailwindcss()],
+  publicDir: false,
   build: {
     outDir: 'public/build',
     emptyOutDir: true,

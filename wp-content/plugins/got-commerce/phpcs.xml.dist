@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="GOT WordPress Coding Standards">
+    <description>WordPress Coding Standards for first-party PHP; PSR-4 class file names follow Composer namespaces.</description>
+
+    <file>got-commerce.php</file>
+    <file>src</file>
+    <file>../../themes/got-sage/app</file>
+    <file>../../themes/got-sage/functions.php</file>
+    <file>../../themes/got-sage/index.php</file>
+
+    <arg name="extensions" value="php" />
+    <arg name="basepath" value="../../.." />
+
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+    </rule>
+</ruleset>

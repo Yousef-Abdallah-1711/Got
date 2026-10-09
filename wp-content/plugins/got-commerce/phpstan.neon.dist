@@ -1,0 +1,16 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+  level: 6
+  paths:
+    - got-commerce.php
+    - src
+    - ../../themes/got-sage/app
+    - ../../themes/got-sage/functions.php
+  bootstrapFiles:
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+    - ../../themes/got-sage/vendor/autoload.php
+  excludePaths:
+    analyse:
+      - tests
