@@ -1,0 +1,19 @@
+# Composer dependencies
+vendor/
+
+# Node dependencies
+node_modules/
+
+# Generated theme assets
+/wp-content/themes/got-sage/public/build/
+
+# Local agent and tool state
+/.claude/
+/.agents/
+/.specify/
+/.kimi-code/
+/.html-to-sage/
+
+# Operating system files
+.DS_Store
+Thumbs.db
