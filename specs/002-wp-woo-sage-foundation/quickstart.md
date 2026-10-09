@@ -1,19 +1,22 @@
 # Quickstart: WordPress, WooCommerce, and Sage Foundation
 
-Local verification steps for this feature once implemented.
+Use this checklist to verify the local foundation. The repository's [README](../../README.md) is the setup guide and contains the exact dependency, Local, and Windows link commands.
 
-1. **Clone and install dependencies**:
-   ```bash
-   git clone <repo-url> && cd got-ecommerce
-   composer install
-   npm install
-   ```
-2. **Bring up a local WordPress environment** (Docker/Lando — exact tool per the dev lead's choice, not fixed by this feature) pointed at `wp-content/themes/got-sage` and `wp-content/plugins/got-commerce`.
-3. **Activate**: in WP Admin → Plugins, activate `got-commerce`; in Appearance → Themes, activate `got-sage`.
-4. **Verify WooCommerce**: WooCommerce → Settings → General confirms currency is EGP; WooCommerce → Settings → Advanced → Features confirms "High-Performance Order Storage" is enabled.
-5. **Verify theme renders**: visit the homepage locally — should render WordPress/WooCommerce defaults without a PHP fatal error (no custom design yet — that's Feature 003+).
-6. **Verify the build**: `npm run build` completes without error and produces `public/build/` assets.
-7. **Verify CI**: open a throwaway pull request with a deliberate lint violation; confirm the GitHub Actions check fails; fix it; confirm it passes and that merging deploys to staging automatically (check the staging URL for the change).
-8. **Verify the setup guide**: hand the README to someone who hasn't set this up before and confirm they reach step 5 above without asking a question (User Story 3's acceptance test).
+## Local verification
 
-**Done when**: steps 1–7 all succeed and step 8's dry run has been performed at least once.
+1. Clone the repository and install dependencies using the README's project-specific Composer and npm commands. There are no root-level `composer.json` or `package.json` files.
+2. Create/start a local WordPress site in Local with PHP 8.3 or newer. Link `wp-content/themes/got-sage` and `wp-content/plugins/got-commerce` into that site's `wp-content` directory as described in the README.
+3. In WordPress Admin, install WooCommerce and activate WooCommerce, GOT Commerce, and GOT Sage.
+4. Confirm WooCommerce uses Egypt and EGP, tax calculation is explicitly disabled pending the accountant's direction, and HPOS is enabled under **WooCommerce → Settings → Advanced → Features**.
+5. Visit the local homepage and confirm it renders without a PHP fatal error.
+6. Run the PHP tests, PHPStan, PHPCS, Stylelint, ESLint, and Vite build using the README's commands.
+
+## CI and deployment verification
+
+7. Open a throwaway pull request containing a deliberate PHPCS violation. Confirm the GitHub Actions check fails, remove the violation, and confirm the checks pass. **Pending** until `.github/workflows/ci.yml` is pushed with a GitHub credential authorized to write workflow files and an actual Actions run is available.
+8. Confirm merge to `main` deploys the change to staging, and confirm production requires a manual approval gate. **Blocked** until a staging/production host and deployment configuration are selected and authorized (T001, T002, T011).
+9. Have a second developer, or perform a fresh-eyes README-only setup review after a break, and record whether they reach the working local site without questions (T020).
+
+## Completion status
+
+The local verification steps can be completed independently. The quickstart is fully validated only after the CI/PR check, staging deployment, production approval-gate, and setup-guide acceptance checks above have real evidence. A local substitute does not count as staging or production evidence.

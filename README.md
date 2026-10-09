@@ -4,34 +4,66 @@ WordPress and WooCommerce store project. The theme and companion plugin live in 
 
 ## Prerequisites
 
-- [Local by WP Engine](https://localwp.com/) to run the local WordPress site.
+- [Local by WP Engine](https://localwp.com/) for a local WordPress site.
+- PHP 8.3 or newer and Composer 2 for the theme and plugin dependencies.
 - Node.js `^20.19.0 || >=22.12.0` and npm for theme assets.
-- PHP 8.3+ and Composer 2 for theme/plugin dependency management. This development host does not have PHP or Composer installed; run those commands in the project's approved Docker-based tooling environment.
+- Git.
 
-## Local setup
+The repository has separate Composer projects for the theme and plugin, and an npm project for the theme. Run commands from each project's directory as shown below; there is no root-level Composer or npm project.
 
-1. Create a site in Local and start it.
-2. Link the repository theme and plugin folders into that site's `app/public/wp-content/` directory. In Local's site shell on Windows, create junctions (adjust the Local site path and repository path):
+## Install project dependencies
 
-   ```cmd
-   mklink /J "C:\path\to\Local Site\app\public\wp-content\themes\got-sage" "C:\path\to\got ecommerce\wp-content\themes\got-sage"
-   mklink /J "C:\path\to\Local Site\app\public\wp-content\plugins\got-commerce" "C:\path\to\got ecommerce\wp-content\plugins\got-commerce"
-   ```
-
-3. Install WooCommerce from **Plugins → Add New Plugin** in WordPress.
-4. Activate **GOT Sage**, **GOT Commerce**, and **WooCommerce** in the WordPress admin. Install the theme's Composer dependencies before activation using the project's approved Composer tooling.
-
-## Theme assets
-
-From `wp-content/themes/got-sage/`, install JavaScript dependencies and build the assets:
+From the repository root, run:
 
 ```sh
-npm install
-npm run build
+composer --working-dir=wp-content/plugins/got-commerce install --no-interaction
+composer --working-dir=wp-content/themes/got-sage install --no-interaction
+npm --prefix wp-content/themes/got-sage ci
+npm --prefix wp-content/themes/got-sage run build
 ```
 
-For Vite development with hot reload, use `npm run dev`.
+On Windows PowerShell installations that block the `npm.ps1` shim, use `npm.cmd` in the same commands.
+
+## Set up a local WordPress site
+
+1. Create and start a site in Local. Choose PHP 8.3 or newer and the standard single-site WordPress environment. Use the WordPress admin login that Local displays for the site.
+2. From the repository root, link the theme and plugin into that site's `app/public/wp-content/` directory. On Windows, open PowerShell, set the two paths, and create junctions:
+
+   ```powershell
+   $repoPath = (Get-Location).Path
+   $sitePath = 'C:\path\to\Local Site'
+   New-Item -ItemType Junction -Path "$sitePath\app\public\wp-content\themes\got-sage" -Target "$repoPath\wp-content\themes\got-sage"
+   New-Item -ItemType Junction -Path "$sitePath\app\public\wp-content\plugins\got-commerce" -Target "$repoPath\wp-content\plugins\got-commerce"
+   ```
+
+   On macOS or Linux, open a terminal at the repository root, set the Local site path, and create symbolic links:
+
+   ```sh
+   repoPath="$(pwd)"
+   sitePath="/path/to/Local Site"
+   ln -s "$repoPath/wp-content/themes/got-sage" "$sitePath/app/public/wp-content/themes/got-sage"
+   ln -s "$repoPath/wp-content/plugins/got-commerce" "$sitePath/app/public/wp-content/plugins/got-commerce"
+   ```
+3. In WordPress Admin, install WooCommerce, then activate WooCommerce, GOT Commerce, and GOT Sage. Install both Composer projects before activating the theme/plugin.
+4. In WooCommerce settings, set the store country to Egypt and currency to EGP. Keep tax calculation explicitly disabled until the accountant provides the tax configuration. Confirm HPOS is enabled under **WooCommerce → Settings → Advanced → Features**.
+5. Visit the local homepage and confirm it renders without a PHP fatal error.
+
+## Run checks
+
+Run from the repository root:
+
+```sh
+composer --working-dir=wp-content/plugins/got-commerce test
+composer --working-dir=wp-content/plugins/got-commerce analyse
+composer --working-dir=wp-content/plugins/got-commerce lint
+php wp-content/themes/got-sage/tests/SiteModeTest.php
+npm --prefix wp-content/themes/got-sage run lint:css
+npm --prefix wp-content/themes/got-sage run lint:js
+npm --prefix wp-content/themes/got-sage run build
+```
+
+The PHP commands require PHP 8.3+ and the installed Composer dependencies. The frontend commands require `npm ci` from the dependency-install section.
 
 ## Deployment
 
-Staging and production deployment are **BLOCKED pending a hosting decision**. See [docs/adr/0012-hosting-and-caching.md](docs/adr/0012-hosting-and-caching.md). No deployment target is configured or implied by this repository.
+Staging and production deployment are blocked pending a hosting decision and target credentials. No deployment target or deployment workflow is configured yet. See [ADR 0012: Hosting and Caching](docs/adr/0012-hosting-and-caching.md). Production deployment must use an explicit approval gate once a target is selected.
