@@ -13,6 +13,7 @@ node_modules/
 /.specify/
 /.kimi-code/
 /.html-to-sage/
+/.playwright-mcp/
 
 # Operating system files
 .DS_Store
