@@ -1,9 +1,12 @@
 @php
-  $footerMenus = array(
-    array('title' => __('Shop', 'got-sage'), 'location' => 'footer_shop'),
-    array('title' => __('Help', 'got-sage'), 'location' => 'footer_help'),
-    array('title' => __('Follow', 'got-sage'), 'location' => 'footer_follow'),
-  );
+  $isComingSoonHome = $isComingSoonHome ?? false;
+  $footerMenus = $isComingSoonHome
+    ? array(array('title' => __('Follow', 'got-sage'), 'location' => 'footer_follow'))
+    : array(
+      array('title' => __('Shop', 'got-sage'), 'location' => 'footer_shop'),
+      array('title' => __('Help', 'got-sage'), 'location' => 'footer_help'),
+      array('title' => __('Follow', 'got-sage'), 'location' => 'footer_follow'),
+    );
 @endphp
 
 <footer class="got-footer">

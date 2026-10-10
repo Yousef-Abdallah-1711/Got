@@ -48,7 +48,7 @@
     @yield('content')
   </main>
 
-  @include('partials.footer')
+  @include('partials.footer', ['isComingSoonHome' => $isComingSoonHome])
 
   @if ('store' === $headerMode)
     @include('partials.cart-drawer')
