@@ -11,7 +11,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 ## Phase 1: Setup
 
 - [x] T001 Verify the local implementation prerequisite: a functioning WordPress site at `http://got.local`, with GOT Sage and GOT Commerce active and required development dependencies installed — **VERIFIED LOCALLY, READ-ONLY (2026-10-10)**: Edge loaded the Feature 002 skeleton homepage after one transient connection-refused response; WP Admin showed GOT Sage active and ACF PRO 6.5.0.1, GOT Commerce 0.1.0, and WooCommerce 11.2.1 active; theme/plugin Composer autoloaders and theme Vite/npm dependencies are present. No WordPress settings or data were changed. This verifies local implementation eligibility only.
-- [ ] T001a Before claiming staging acceptance or production deployment, provision a separate staging environment and verify GOT Sage/GOT Commerce activation, HTTPS, and the required CI/deployment checks (Feature 002 T001/T002/T010/T011/T014/T016–T019) — **DEFERRED — EXTERNAL INFRASTRUCTURE**: staging and remote CI/deployment validation are not prerequisites for local implementation and remain unverified.
+- [ ] T001a Before claiming staging acceptance or production deployment, provision a separate staging environment and verify GOT Sage/GOT Commerce activation, HTTPS, and the required CI/deployment checks (Feature 002 T001/T002/T010/T011/T014/T016–T019) — **OPEN — EXTERNAL INFRASTRUCTURE**: requires an owner-provisioned staging URL with HTTPS, the theme/plugin activated there, authorized credentials for read-only acceptance, and passing remote CI/deployment evidence for the listed Feature 002 gates. Local `got.local` results do not satisfy this gate; do not change Coming Soon mode or create test data on the local site to substitute.
 - [x] T002 [P] Wire Tailwind v4's CSS-first `@theme` block in `resources/css/app.css` to the custom properties defined in `resources/css/tokens.css` (no `tailwind.config.js` — Sage 11 ships Tailwind v4, see `docs/adr/0001-sage-version.md`, updated 2026-10-09 from the originally-planned Tailwind-3 JS-config approach); expose supported color, typography, layout, shadow, easing, and responsive utilities, with durations, focus widths, and stacking available as CSS variables/custom-property utilities.
 
 ## Phase 2: Foundational (Blocking Prerequisites)
@@ -28,7 +28,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 ### Tests for User Story 1
 
 - [x] T007 [P] [US1] Playwright test: hard reload with dark OS preference, no stored choice → assert no flash of light mode (screenshot-diff at paint time)
-- [x] T008 [P] [US1] axe-core automated contrast scan across both themes → assert zero failures
+- [x] T008 [P] [US1] axe-core automated contrast scan across both themes → assert zero failures — current evidence covers the Coming Soon homepage in dark and light themes; complete all-surface coverage is tracked separately under convergence T026.
 
 ### Implementation for User Story 1
 
@@ -44,7 +44,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 
 ### Tests for User Story 2
 
-- [ ] T012 [P] [US2] Playwright test: visit home/policy-page/product/cart/checkout → assert correct header variant on each
+- [ ] T012 [P] [US2] Playwright test: visit home/policy-page/product/cart/checkout → assert correct header variant on each — **OPEN**: the anonymous `/shop/` E2E is skipped because WooCommerce Coming Soon visibility hides store templates; the policy route returns 404, no approved published product page exists, and empty-cart checkout redirects. Gate: use an authorized non-production/staging fixture after approved policy content, a published test product, and a non-empty cart are available; assert minimal/store/checkout variants without changing local Coming Soon settings or Product ID 12.
 - [x] T013 [P] [US2] Playwright test: configure 2 announcement messages → assert auto-rotation, pause-on-hover, and zero rotation under `prefers-reduced-motion`
 
 ### Implementation for User Story 2
@@ -64,7 +64,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 ### Tests for User Story 3
 
 - [x] T019 [P] [US3] Manual keyboard-only walkthrough of header/footer/toggle/announcement bar — zero unreachable controls
-- [ ] T020 [P] [US3] Manual screen-reader pass (VoiceOver or NVDA) confirming toggle state announcements and non-disruptive announcement-bar behavior
+- [ ] T020 [P] [US3] Manual screen-reader pass (VoiceOver or NVDA) confirming toggle state announcements and non-disruptive announcement-bar behavior — **OPEN**: no real VoiceOver/NVDA pass is recorded; browser accessibility-tree inspection and axe are not substitutes. Gate: run with VoiceOver on supported macOS/Safari or NVDA on supported Windows/browser, verify the toggle announces the next action/state after activation, and confirm automatic announcement rotation is not repeatedly announced while the current message remains readable on request; record platform/version and results.
 
 ### Implementation for User Story 3
 
@@ -78,7 +78,7 @@ description: "Task list for Feature 003 — Design Tokens and Global UI"
 
 - [x] T022 [P] Update `docs/design/dark-light-tokens.md` and `docs/audit/source-conflicts.md` C-01 to RESOLVED/VERIFIED status — **DONE 2026-10-10 as documentation maintenance only**: both references reflect the owner-approved Acid Lime decision and optional silver override; Feature 003 implementation proceeded after this documentation update.
 - [x] T022a [P] Code-level audit of `tokens.css`, `app.css`, and every global-UI Blade/SCSS file for hardcoded `left`/`right`/`margin-left`/`padding-right`-style properties; replace with logical equivalents (`inset-inline-start`, `margin-inline`, `padding-block`, etc.) — **remediates a gap found during the cross-feature audit: RTL-readiness is a PRD §8 requirement with no prior task anywhere**
-- [x] T023 Run full visual regression (6 breakpoints by 2 themes) per `docs/testing/visual-regression-plan.md` -- **DONE LOCALLY 2026-10-10**: captured approved reference and anonymous got.local renders at 360, 375, 390, 768, 1024, 1280, 1440, and 1920px in both themes; all current-page captures pass the horizontal-overflow check. Re-captured after adding the optimized Drop 01 visual concept and the supplied transparent logo, optimized to WebP. Matched 1280px and full-page screenshots were visually compared. The editable logo vector, actual product photography, licensed fonts, and WordPress menu content remain open design inputs; this closes the regression run, not a claim of exact pixel parity.
+- [ ] T023 Run full visual regression (6 breakpoints by 2 themes) per `docs/testing/visual-regression-plan.md` — **PARTIAL, KEEP OPEN**: reference/current screenshots exist at 8 widths in both themes and current pages passed overflow checks; 1280px first-view/full-page captures were manually compared. The visual contract still requires automated pixel diffs against its tolerances and review across the applicable global UI variants/states. Gate: stabilize approved logo/vector, licensed font and menu inputs; provide approved product/page fixtures for store and checkout variants; run and retain pixel-diff results at the required viewport/theme matrix, plus owner review of brand-dependent differences.
 - [ ] T024 Run quickstart.md validation end to end
 
 ## Dependencies & Execution Order
@@ -99,13 +99,18 @@ Task: "Build footer partial from WP menus"              # US2
 Task: "Build announcement-bar partial + rotation logic" # US2
 ```
 
-## Feature 003 execution evidence (2026-10-10)
+## Feature 003 final handoff audit (2026-10-10)
 
-- **Completed T002-T011, T013-T019, T021, T022a, and T023 locally.** Tokens and shared UI are implemented in the Sage theme. All 126 unique source-token names are present in `tokens.css`; `app.css` exposes supported utility aliases through Tailwind v4's CSS-first theme, while remaining tokens are usable directly or through custom-property utilities. Vite build, Stylelint, ESLint, PHPStan, the configured PHPCS/WPCS scan, and the Feature 003 Playwright suite pass. The suite reports 11 passed and 2 skipped; the skipped cases require an unauthenticated store-route view that WooCommerce Coming Soon visibility does not expose.
+- **Completed locally:** T002-T011, T013-T019, T021, T022a. Tokens and shared UI are implemented in the Sage theme. All 126 unique source-token names are present in `tokens.css`; `app.css` exposes supported utility aliases through Tailwind v4's CSS-first theme, while remaining tokens are usable directly or through custom-property utilities. Historical build/lint/static-analysis evidence remains recorded in the earlier execution notes. The final audit's targeted Playwright run reports 7 passed and 2 skipped; the skipped cases require store templates hidden by WooCommerce Coming Soon visibility. T023 is partial/open; T024 is open.
 - **T007 detail:** the Playwright test records root theme and computed body background at first contentful paint. It verifies the no-flash behavior but does not create a screenshot-diff artifact.
-- **T012 remains open:** the Coming Soon home renders its minimal header, while shop and `/cart/` render the store header (the cart page still shows a placeholder). The policy route is 404, no published product page exists, and empty-cart checkout redirects. The relevant routes cannot all be verified until site content exists; none was fabricated.
+- **T012 remains open:** the anonymous `/shop/` header/cart-drawer checks both skipped under WooCommerce Coming Soon visibility; current evidence also records a 404 policy route, no approved published product page, and an empty-cart checkout redirect. A staging/non-production route fixture and non-empty cart are required for the route matrix; none was fabricated and Product ID 12 was not changed.
 - **T020 remains open:** no NVDA or VoiceOver screen-reader pass was performed. Browser accessibility-tree inspection is not counted as that manual test.
-- **T023 detail:** the approved prototype was served over local HTTP without changing its source. Reference/current screenshots were refreshed at eight widths in both themes; all current renders passed the horizontal-overflow check. The 1280px first view and full-page story/footer were manually compared. The story uses a generated 140.6 KB WebP visual concept; the hero/header/footer use a 193 KB WebP optimized from the supplied transparent logo PNG through a reusable Blade component. The editable SVG/AI master, actual product photo, licensed fonts, and complete footer menu content remain open inputs. Evidence is in `docs/reviews/coming-soon-evidence/`; the comparison is in `docs/reviews/COMING-SOON-VISUAL-AUDIT.md`.
-- **T024 remains open:** quickstart checks for build, throttled no-flash, toggle/name, persistent Edge profile restart, blocked storage, two-message rotation/reduced motion, axe contrast, and keyboard/focus behavior passed. The checkout-header check cannot run because the empty cart redirects checkout. The required all-checks gate therefore remains incomplete.
+- **T023 remains open:** visual evidence is in `docs/reviews/coming-soon-evidence/` and the comparison in `docs/reviews/COMING-SOON-VISUAL-AUDIT.md`; captures/overflow checks and a manual 1280px comparison are not the required automated pixel-diff and full global-variant parity gate. Editable logo/vector, real product photography, licensed fonts, and complete WordPress menu content remain open inputs.
+- **T024 remains open:** the final audit ran `npm.cmd run test:e2e -- tests/e2e/global-ui.spec.js`: 7 passed, 2 skipped (both store-route tests). The passing cases covered first-contentful-paint theme resolution, theme persistence across browser restart, blocked storage, axe on Coming Soon in both themes, announcement rotation/pause/reduced motion, and no-overflow checks. A production build attempt failed because Tailwind could not resolve `./contract.css` at that moment. Immediately afterward, the workspace showed concurrent uncommitted theme-source edits/new contract files; these were left untouched and no build was retried against potentially in-progress work. Re-run the build after source changes are stabilized, then finish the quickstart route/header checks with a policy page, published test product, non-empty cart, and accessible checkout in an authorized non-production/staging fixture.
 - **T019 keyboard evidence:** Space and Enter activate the theme toggle without reload; the focus ring remains visible in dark and light modes.
 - Product ID 12 remains in Trash. Coming Soon mode, user accounts, and product data were not changed.
+
+## Phase 7: Convergence — acceptance criteria gaps
+
+- [ ] T025 [US1] Verify SC-001 across 100 hard reloads in both themes with throttled network and retain the results — **OPEN**: the existing Playwright test observes theme/background at first contentful paint for a single run, not the specification's 100 repeated reloads.
+- [ ] T026 [US1] Complete the SC-002 axe/contrast audit for all reachable global UI surfaces in both themes — **OPEN**: current automated evidence scans only the Coming Soon homepage; finish on ordinary store, cart, and checkout surfaces when T012's approved route/content fixture exists, and record zero failing text/control pairs.
