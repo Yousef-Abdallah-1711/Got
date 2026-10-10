@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: PHP, frontend lint, and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+          coverage: none
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: wp-content/themes/got-sage/package-lock.json
+
+      - name: Install plugin dependencies
+        run: composer install --working-dir=wp-content/plugins/got-commerce --no-interaction --prefer-dist
+
+      - name: Install theme dependencies
+        run: composer install --working-dir=wp-content/themes/got-sage --no-interaction --prefer-dist
+
+      - name: Run plugin tests
+        working-directory: wp-content/plugins/got-commerce
+        run: composer test
+
+      - name: Run theme Site Mode tests
+        working-directory: wp-content/themes/got-sage
+        run: php tests/SiteModeTest.php
+
+      - name: Run PHPStan at level 6
+        working-directory: wp-content/plugins/got-commerce
+        run: composer analyse
+
+      - name: Run WordPress Coding Standards
+        working-directory: wp-content/plugins/got-commerce
+        run: composer lint
+
+      - name: Install frontend dependencies
+        working-directory: wp-content/themes/got-sage
+        run: npm ci
+
+      - name: Lint CSS, lint JavaScript, and build theme assets
+        working-directory: wp-content/themes/got-sage
+        run: |
+          npm run lint:css
+          npm run lint:js
+          npm run build

@@ -1,6 +1,6 @@
 # Component Inventory
 
-All 25 components were read in full via their `.d.ts` contracts (source: `GØT Design System (2)/components/{core,forms,feedback,navigation,commerce}/*.d.ts`). Status: VERIFIED for every row below (prop contracts quoted directly from source).
+All 26 components were read in full via their `.d.ts` contracts (source: `GØT Design System (2)/components/{core,forms,feedback,navigation,commerce}/*.d.ts`). Status: VERIFIED for every row below (prop contracts quoted directly from source).
 
 ## Core (5)
 
@@ -10,7 +10,7 @@ All 25 components were read in full via their `.d.ts` contracts (source: `GØT D
 | `IconButton` | 44×44 icon-only control, **label is required** (not optional) — good accessibility discipline to preserve. | `icon`, `label` (required), `count` (badge, announced in label), `variant`, `size` | Used for cart/wishlist/menu triggers in `Header`. |
 | `Icon` | Stroke icon from a bundled Lucide subset (substitute for the brand's own sprite). | `name` (closed union of ~31 names), `size` (default 20), `strokeWidth` (default 1.5 — sharper than default Lucide), `label` (omit for decorative) | **Substitution flagged by the design system itself** — must be swapped for the brand's real SVG sprite when supplied (see `missing-assets.md`). |
 | `Badge` | Mono uppercase status/promotion tag; "always text — never colour alone"; max two per product image. | `tone`: `'new' \| 'offer' \| 'bogo' \| 'shipping' \| 'limited' \| 'low' \| 'soldout' \| 'outline' \| 'drop'` | The `'offer'`/`'bogo'`/`'shipping'` tones exist in the component contract even though BOGO/free-shipping-threshold are **not in GOT-Store-PRD.md's P0/P1 scope** (free-shipping bar is P2-F003, BOGO isn't scoped at all). See `source-conflicts.md`. |
-| `Wordmark` | Typeset "GØT" (U+00D8) standing in for the missing sword-monogram vector logo. | `size`, `href` | Explicit placeholder — **do not** treat as the production logo; swap for the real mark the moment it's supplied (`missing-assets.md`). |
+| `Wordmark` | Supplied transparent sword/wordmark logo | `size`, `alt` | Production theme uses the reusable logo component and optimized WebP derived from the supplied PNG; editable vector master remains open (`missing-assets.md`). |
 
 ## Forms (7)
 
@@ -37,7 +37,7 @@ All 25 components were read in full via their `.d.ts` contracts (source: `GØT D
 | Component | Purpose | Key props | Reuse plan note |
 |---|---|---|---|
 | `Header` | Minimal store header: nav left, wordmark centered, utility icons right, 1px baseline. | `nav`, `cartCount`, `theme`/`onToggleTheme`, `onCart`/`onSearch`/`onAccount`/`onMenu`, `mode` (`store/minimal/checkout`), `layout`, `sticky`, `wishCount`/`onWishlist`, `compact` (56px after scroll) | Three header modes map cleanly to three Blade header partial variants (full nav / Coming-Soon minimal / distraction-free checkout). |
-| `AnnouncementBar` | Rotating announcement bar, auto-advances every 4.5s, pauses on hover/focus/Pause button/reduced-motion; **never announces automatic changes to screen readers** (explicit accessibility rule). | `messages`, `variant` (`lime/dark/quiet`), `interval` | `variant="lime"` is the **default** — i.e. the unapproved Acid Lime accent is wired as the default visual treatment of a primary, always-visible UI element. High-visibility instance of the Acid-Lime-approval gap (`source-conflicts.md`). |
+| `AnnouncementBar` | Rotating announcement bar, auto-advances every 4.5s, pauses on hover/focus/Pause button/reduced-motion; **never announces automatic changes to screen readers** (explicit accessibility rule). | `messages`, `variant` (`lime/dark/quiet`), `interval` | `variant="lime"` is the default, consistent with the owner-approved Acid Lime treatment in resolved C-01. Preserve the pause/reduced-motion and screen-reader behavior. |
 | `FilterBar` | Category tab rail + count + filter trigger + sort, top of shop/category grids. | `tabs`, `active`, `onTab`, `count`, `sort`/`sortOptions`/`onSort`, `filterCount`, `onFilters` | |
 | `Footer` | Brand manifesto + link columns + policies; cookie settings always reachable. | `columns` (`{h, items}[]`), `manifesto` (default "Forged to be different."), `onCookieSettings`, `onLink` | Footer link columns should become native WordPress menus per the HTML-to-Sage global-template-parts rule, not a hardcoded `columns` array. |
 | `Accordion` | Rule-separated disclosure list (PDP details/care/shipping, FAQ). | `items` (`{title,content}[]`), `defaultOpen`, `multiple` | |
@@ -56,4 +56,4 @@ All 25 components were read in full via their `.d.ts` contracts (source: `GØT D
 ## Cross-cutting observations
 
 - Every component with a "required accessible label/name" rule (`IconButton.label`, `ProductCard` wishlist heart, `ThemeToggle`) should be treated as a **hard accessibility requirement**, not just a nice-to-have, when re-implemented in Blade — these are already-correct patterns worth preserving exactly.
-- No component directly implements price/stock calculation — they are all pure presentation components driven by props. This is the correct shape for a WordPress/WooCommerce port: all 25 components can become stateless Blade partials/Alpine components fed by server-computed data, with no component-level logic to "port" beyond prop wiring.
+- No component directly implements price/stock calculation — they are all pure presentation components driven by props. This is the correct shape for a WordPress/WooCommerce port: all 26 components can become stateless Blade partials/Alpine components fed by server-computed data, with no component-level logic to "port" beyond prop wiring.

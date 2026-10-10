@@ -6,7 +6,7 @@ Everything below is referenced, implied, or required by the source documents but
 
 | Asset | Required by | Current state |
 |---|---|---|
-| Approved master logo (SVG/AI, the GØT sword monogram) | `GOT-Store-PRD.md` Assumption 1, `DESIGN.md` §2, §14, `GOT_Complete_Brand_Identity.md` §4.1 | **Does not exist.** Only raster mockup *descriptions* exist in the brand-identity doc (no actual image files in the repo); the design system uses a typeset `Wordmark` component as an explicit stand-in. |
+| Approved master logo (SVG/AI, GOT sword monogram) | GOT Store PRD assumption 1; DESIGN sections 2 and 14; brand identity section 4.1 | A transparent PNG logo was supplied. The theme uses its optimized 193 KB WebP copy at `wp-content/themes/got-sage/resources/images/got-logo.webp`. The editable SVG/AI master remains unsupplied; keep the raster as the current brand asset and vector delivery as an open design input. |
 | Brand color sign-off (final, measured ink values) | `DESIGN.md` §15, brand-identity §4.2 | All hex values across every document are labeled "recommended approximations," not measured production ink. |
 | Licensed font binaries (Inter, Inter Tight, IBM Plex Mono — self-hosted) | PRD §9, DESIGN.md §4 | **Does not exist.** `tokens/fonts.css` currently loads from Google Fonts as a placeholder per `readme.md`. |
 | Real brand icon sprite (inline SVG, no icon font, per PRD §9) | PRD §9 Frontend Stack | **Does not exist.** 32 Lucide SVGs (ISC license) are substituted; `Icon.d.ts`/`readme.md` both explicitly flag this as a substitution to replace later. |

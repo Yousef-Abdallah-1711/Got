@@ -1,0 +1,222 @@
+/* GØT design tokens, ported from GØT Design System (2)/tokens. */
+:root {
+  color-scheme: dark;
+
+  /* Brand palette */
+  --got-obsidian: #080808;
+  --got-packaging: #111111;
+  --got-graphite: #202020;
+  --got-rule: #303030;
+  --got-steel: #777777;
+  --got-silver: #bfc0c2;
+  --got-offwhite: #f2f2f0;
+  --got-white: #ffffff;
+  --got-lime: #c2ff3d;
+  --got-elevated: #141414;
+  --got-offwhite-2: #f4f4f1;
+  --got-paper: #e6e6e4;
+  --got-paper-rule: #d0d0ce;
+  --got-ink-muted: #555555;
+  --got-gunmetal: #3a3a3c;
+  --got-ash: #a3a3a3;
+
+  /* Status colors are semantic and remain distinct from the brand accent. */
+  --got-red-400: #ff7a6e;
+  --got-red-700: #b3261e;
+  --got-green-400: #6fcf8e;
+  --got-green-700: #1e7a3c;
+  --got-amber-400: #e8b85a;
+  --got-amber-700: #8a5a00;
+
+  /* Dark semantic palette */
+  --got-bg: var(--got-obsidian);
+  --got-surface: var(--got-elevated);
+  --got-surface-2: var(--got-graphite);
+  --got-border: var(--got-rule);
+  --got-border-strong: #4a4a4a;
+  --got-text: var(--got-offwhite);
+  --got-text-muted: var(--got-ash);
+  --got-accent: var(--accent-ink);
+  --got-logo: var(--got-white);
+  --accent: var(--got-lime);
+  --on-accent: var(--got-obsidian);
+  --accent-ink: var(--got-lime);
+  --got-cta-bg: var(--accent);
+  --got-cta-text: var(--on-accent);
+  --got-cta-bg-hover: var(--got-white);
+  --color-link: var(--got-offwhite);
+  --color-focus: var(--got-lime);
+  --color-error: var(--got-red-400);
+  --color-success: var(--got-green-400);
+  --color-warning: var(--got-amber-400);
+  --color-disabled: #5c5c5c;
+  --color-disabled-bg: #1a1a1a;
+  --color-overlay: rgb(8 8 8 / 72%);
+  --color-input-bg: var(--got-graphite);
+  --color-on-image: var(--got-white);
+  --color-skeleton: #1c1c1c;
+  --color-skeleton-hi: #262626;
+  --color-selection: var(--got-silver);
+  --color-selection-text: var(--got-obsidian);
+  --text-body: var(--got-text);
+  --text-muted: var(--got-text-muted);
+  --surface-page: var(--got-bg);
+  --surface-card: var(--got-surface);
+  --surface-inset: var(--got-surface-2);
+
+  /* Type: font files are not part of the supplied licensed assets. */
+  --font-display: "Inter Tight", "Arial Narrow", arial, sans-serif;
+  --font-body: inter, arial, sans-serif;
+  --font-mono: "IBM Plex Mono", consolas, monospace;
+  --fs-display: clamp(2.75rem, 12vw, 4.75rem);
+  --fs-h1: clamp(2.5rem, 7vw, 3.5rem);
+  --fs-h2: clamp(1.8rem, 5vw, 2.5rem);
+  --fs-h3: clamp(1.125rem, 2.4vw, 1.5rem);
+  --fs-body: 1rem;
+  --fs-body-lg: 1.125rem;
+  --fs-small: 0.875rem;
+  --fs-eyebrow: 0.75rem;
+  --fs-label: 0.8125rem;
+  --lh-display: 0.96;
+  --lh-h1: 1.05;
+  --lh-h2: 1.1;
+  --lh-h3: 1.2;
+  --lh-body: 1.6;
+  --lh-small: 1.45;
+  --lh-eyebrow: 1.3;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.015em;
+  --tracking-caps: 0.14em;
+  --tracking-label: 0.08em;
+  --tracking-mono: 0.12em;
+  --measure: 68ch;
+
+  /* Spacing, sizing, layout and shape */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --gutter: 20px;
+  --content-max: 1440px;
+  --header-h: 64px;
+  --hit: 44px;
+  --radius-0: 0;
+  --radius-control: 2px;
+  --radius-card: 4px;
+  --radius-pill: 999px;
+  --border-w: 1px;
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --bp-tablet: 640px;
+  --bp-desktop: 1024px;
+  --bp-wide: 1440px;
+  --ratio-card: 4 / 5;
+  --ratio-hero: 16 / 9;
+
+  /* Motion and elevation */
+  --ease-mech: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-control: 150ms;
+  --dur-hover: 220ms;
+  --dur-announce: 380ms;
+  --dur-panel: 280ms;
+  --dur-reveal: 500ms;
+  --shadow-none: none;
+  --shadow-panel: 0 6px 8px rgb(0 0 0 / 32%);
+  --shadow-sheet: 0 -16px 48px rgb(0 0 0 / 40%);
+  --scrim-bottom: linear-gradient(to top, rgb(8 8 8 / 78%) 0%, rgb(8 8 8 / 0%) 55%);
+  --z-header: 40;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --got-bg: var(--got-offwhite-2);
+  --got-surface: var(--got-white);
+  --got-surface-2: #e9e9e5;
+  --got-border: var(--got-paper-rule);
+  --got-border-strong: #9a9a98;
+  --got-text: var(--got-obsidian);
+  --got-text-muted: var(--got-ink-muted);
+  --got-accent: var(--accent-ink);
+  --got-logo: var(--got-obsidian);
+  --accent-ink: #3d5200;
+  --got-cta-bg: var(--accent);
+  --got-cta-text: var(--on-accent);
+  --got-cta-bg-hover: var(--got-obsidian);
+  --color-link: var(--got-obsidian);
+  --color-focus: var(--got-lime);
+  --color-error: var(--got-red-700);
+  --color-success: var(--got-green-700);
+  --color-warning: var(--got-amber-700);
+  --color-disabled: #9a9a98;
+  --color-disabled-bg: var(--got-paper);
+  --color-overlay: rgb(8 8 8 / 48%);
+  --color-input-bg: var(--got-white);
+  --color-on-image: var(--got-white);
+  --color-skeleton: #e2e2e0;
+  --color-skeleton-hi: #ebebe9;
+  --color-selection: var(--got-obsidian);
+  --color-selection-text: var(--got-offwhite);
+  --text-body: var(--got-text);
+  --text-muted: var(--got-text-muted);
+  --surface-page: var(--got-bg);
+  --surface-card: var(--got-surface);
+  --surface-inset: var(--got-surface-2);
+  --shadow-panel: 0 6px 8px rgb(8 8 8 / 12%);
+  --shadow-sheet: 0 -16px 48px rgb(8 8 8 / 12%);
+}
+
+[data-accent="silver"] {
+  --accent: var(--got-silver);
+  --accent-ink: var(--got-silver);
+  --color-focus: var(--got-silver);
+}
+
+[data-accent="silver"][data-theme="light"] {
+  --accent-ink: var(--got-gunmetal);
+  --color-focus: var(--got-gunmetal);
+}
+
+@media (width >= 640px) {
+  :root {
+    --gutter: 32px;
+    --header-h: 72px;
+  }
+}
+
+@media (width >= 1024px) {
+  :root {
+    --gutter: 56px;
+    --header-h: 80px;
+    --fs-display: clamp(3.5rem, 8vw, 8rem);
+    --fs-h1: clamp(2.75rem, 5vw, 5.5rem);
+    --fs-h2: clamp(2rem, 3.5vw, 4rem);
+    --fs-h3: clamp(1.25rem, 1.6vw, 1.75rem);
+    --fs-body: 1.0625rem;
+    --fs-eyebrow: 0.8125rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-control: 0ms;
+    --dur-hover: 0ms;
+    --dur-announce: 0ms;
+    --dur-panel: 0ms;
+    --dur-reveal: 0ms;
+  }
+}

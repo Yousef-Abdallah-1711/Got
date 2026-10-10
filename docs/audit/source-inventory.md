@@ -42,7 +42,7 @@ Status tags: **VERIFIED** (I opened and read the file) / **PROPOSED** / **BLOCKE
 ## What is explicitly absent (see `missing-assets.md` for full detail)
 
 - No WordPress, Sage, Acorn, Blade, WooCommerce, or any PHP code anywhere in the project directory.
-- No approved logo vector (SVG/AI) — only raster mockups referenced in the brand identity doc, and a typeset `Wordmark` placeholder in the design system.
+- No approved logo vector (SVG/AI); a transparent raster logo PNG was supplied separately and is now used as an optimized WebP at `wp-content/themes/got-sage/resources/images/got-logo.webp`.
 - No licensed font binaries — fonts are loaded from Google Fonts as a stand-in.
 - No real product photography — all images are desaturated Unsplash stock placeholders with photographer credit overlays.
 - No `.rar` archive was found or needed extraction; "GØT Design System (2)" is already a plain folder.

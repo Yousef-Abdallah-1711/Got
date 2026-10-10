@@ -6,7 +6,7 @@ De-duplicated across `GOT-Store-PRD.md` §14 Risk Register, `.html-to-sage/RISKS
 
 | Item | What's needed | From whom | Source |
 |---|---|---|---|
-| **C-01 — Acid Lime vs. silver accent** | A single yes/no/other decision on the primary CTA/focus/announcement-bar color | Brand owner | `docs/audit/source-conflicts.md` |
+| **C-01 — Acid Lime vs. silver accent** | **RESOLVED 2026-10-09:** Acid Lime approved for the primary CTA/focus/announcement-bar treatment; retain silver as an opt-in source override | Resolved by brand owner | `docs/audit/source-conflicts.md` |
 | **C-02 — Inline PDP checkout scope** | Confirm whether feature 009 ships in v1 | Brand/product owner | `docs/audit/source-conflicts.md`, ADR 0006 |
 | **C-03 — BOGO scope** | Confirm whether BOGO ships in v1, v1.1, or stays dormant | Brand/product owner | `docs/audit/source-conflicts.md`, ADR 0009 |
 | **Sage version verification (ADR 0001)** | Run the version-confirmation checklist at Phase 1 kickoff | Dev lead | `docs/architecture/tech-stack.md` §6 |
@@ -34,7 +34,7 @@ De-duplicated across `GOT-Store-PRD.md` §14 Risk Register, `.html-to-sage/RISKS
 
 | Item | Risk | Mitigation path |
 |---|---|---|
-| C-05 — undefined `--got-ash` CSS variable | Could silently fall back to an unstyled/inherited muted-text color | Quick file check of `base.css`/`effects.css` before token porting (not an owner decision — see `docs/audit/source-conflicts.md`) |
+| C-05 — `--got-ash` source token | **RESOLVED 2026-10-10:** `colors.css` defines `--got-ash: #A3A3A3`; preserve it when porting (see `docs/audit/source-conflicts.md`) |
 | C-06 — wishlist guest-gate ambiguity | Minor UX inconsistency risk if unresolved before 012 ships | Brand/product owner decision, low urgency (P1 feature) |
 | C-07 — EarlyAccessForm missing WhatsApp/first-name fields | Minor — PRD's optional fields not yet in the component contract | No decision needed, just an implementation task in feature 005 |
 | C-08 — social handle spelling inconsistencies | Could publish a broken link on packaging QR codes (physical, hard to fix post-print) | Brand owner must verify before Phase 4, already a PRD Phase 4 task |

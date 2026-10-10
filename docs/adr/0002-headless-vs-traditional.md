@@ -27,7 +27,7 @@ VERIFIED as a settled, owner-approved decision (not a live choice this ADR is re
 
 ## Consequences
 
-- All 25 components in `docs/design/component-mapping.md` are mapped to Blade/Alpine/ACF-block targets, not "ported."
+- All 26 components in `docs/design/component-mapping.md` are mapped to Blade/Alpine/ACF-block targets, not "ported."
 - The checkout, cart, and wishlist business logic described in `docs/architecture/checkout-flow.md`/`wishlist-flow.md` lives entirely server-side in PHP (`got-commerce`), with WooCommerce's own Store API or native checkout hooks doing the heavy lifting — not a custom GraphQL/REST layer re-implementing WooCommerce.
 - If a future version of the brand wants a richer client-side experience, that is a new, explicitly-approved architecture change — not something to quietly reach for mid-build because "the React components already exist."
 

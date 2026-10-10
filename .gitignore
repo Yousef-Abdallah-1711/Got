@@ -6,6 +6,8 @@ node_modules/
 
 # Generated theme assets
 /wp-content/themes/got-sage/public/build/
+/wp-content/themes/got-sage/test-results/
+/wp-content/themes/got-sage/playwright-report/
 
 # Local agent and tool state
 /.claude/

@@ -34,10 +34,10 @@ Dedicated Cart page, Product category as its own template/URL, Drop/collection p
 ## Category: Content model readiness (a positive gap — less work than typical)
 
 - `home-content.js`'s `GOT_HOME` object and its "render only if content exists" rule is **already a correct ACF-readiness pattern** — converting it to real ACF field groups is comparatively low-risk/low-effort engineering work, not a redesign.
-- The 25 components' `.d.ts` contracts are close to ready-to-use as Blade component prop signatures — this significantly reduces the component-mapping effort compared to a typical from-scratch Figma-to-code conversion.
+- The 26 components' `.d.ts` contracts are close to ready-to-use as Blade component prop signatures — this significantly reduces the component-mapping effort compared to a typical from-scratch Figma-to-code conversion.
 
 ## Priority ordering (informs `docs/planning/master-roadmap.md`)
 
-1. **Blocking, brand-owner-owned** (no amount of engineering fixes these): Drop 01 product data, real photography, logo vector, legal policy text, launch date, shipping fees. See `missing-assets.md`.
-2. **Blocking, decision-owned** (owner must decide, then engineering proceeds): Acid Lime vs. silver accent (C-01), inline PDP checkout scope (C-02), BOGO scope (C-03), wishlist guest-gate behavior (C-06).
+1. **Blocking, brand-owner-owned** (no amount of engineering fixes these): Drop 01 product data, real photography, editable logo vector (a raster logo is supplied and in use), legal policy text, launch date, and shipping fees. See `missing-assets.md`.
+2. **Blocking, decision-owned** (owner must decide, then engineering proceeds): inline PDP checkout scope (C-02), BOGO scope (C-03), wishlist guest-gate behavior (C-06). The Acid Lime vs. silver decision (C-01) is resolved and is no longer a blocker.
 3. **Pure engineering gaps, no decision needed**: all WooCommerce/WordPress backend wiring, all missing pages/templates, all server-side validation/idempotency, early-access form's missing optional fields (C-07).

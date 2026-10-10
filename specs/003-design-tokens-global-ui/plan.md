@@ -8,6 +8,11 @@
 
 Port the dark/light CSS token system (with Acid Lime now the approved, resolved accent) into Tailwind-consumable custom properties, build the no-flash theme-bootstrap script, and implement the three global template parts (Header in 3 modes, Footer, AnnouncementBar, ThemeToggle) plus the empty CartDrawer shell, per `docs/design/dark-light-tokens.md` and `docs/design/component-mapping.md`.
 
+## Environment gates
+
+- **Local implementation** uses the primary development site at `http://got.local` after the local WordPress, GOT Sage theme, GOT Commerce plugin, and required development dependencies are verified active/installed. Staging is not a prerequisite for beginning implementation.
+- **Staging acceptance and production deployment** require a separate staging environment with verified theme/plugin activation, HTTPS, and the required Feature 002 CI/deployment checks. Passing local checks does not close this gate; see Feature 003 T001a and the roadmap.
+
 ## Technical Context
 
 **Language/Version**: PHP 8.3+/Blade (Sage 11 — raised from the originally documented Sage 10/PHP 8.2+, see `docs/adr/0001-sage-version.md`); vanilla JS for the pre-paint theme script (must run before Alpine initializes); Alpine.js 3.x for the toggle/menu/drawer interactivity.

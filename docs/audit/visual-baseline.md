@@ -29,7 +29,7 @@ Status: VERIFIED — all values below are quoted directly from `GØT Design Syst
 | `--got-surface-2` | `var(--got-graphite)` = `#202020` | `#202020` | ✅ |
 | `--got-border` | `var(--got-rule)` = `#303030` | `#303030` | ✅ |
 | `--got-text` | `var(--got-offwhite)` = `#F2F2F0` | `#F2F2F0` | ✅ |
-| `--got-text-muted` | `var(--got-ash)` ... **`--got-ash` is referenced but never defined in this file** (used as `--got-text-muted:var(--got-ash)` at line 12, yet only `--got-steel`, not `--got-ash`, is declared in the raw-palette block). | `#A3A3A3` | ⚠️ **Likely a broken/undefined CSS variable** — `--got-ash` is read but not set in `colors.css`'s own `:root` block shown here; either it's defined in another token file (`base.css`/`effects.css`, not audited in this pass) or this is a genuine bug. **Flag for verification before implementation.** |
+| `--got-text-muted` | `var(--got-ash)`; `--got-ash: #A3A3A3` is defined in `colors.css` raw palette (verified 2026-10-10; see resolved C-05). | `#A3A3A3` | ✅ Source value verified; preserve when tokens are ported. |
 | **`--got-accent`** | `var(--accent-ink)` → `var(--got-lime)` = **`#C2FF3D`** | `#BFC0C2` (silver) | ❌ **Direct conflict** — see §3 below. |
 | `--got-logo` | `var(--got-white)` = `#FFFFFF` | `#FFFFFF` | ✅ |
 | **`--got-cta-bg`** | `var(--accent)` = **`#C2FF3D`** (lime) | `#F2F2F0` (off-white) | ❌ **Direct conflict** — see §3 below. |

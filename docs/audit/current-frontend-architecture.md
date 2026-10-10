@@ -35,7 +35,7 @@ This content model is unusually good preparation for an ACF/WooCommerce-backed i
 
 ## 6. Component architecture
 
-25 components across 5 categories (`core`, `forms`, `feedback`, `navigation`, `commerce`), each shipped as a `.jsx` implementation + a `.d.ts` prop-contract file + a `.prompt.md` generation brief. Full inventory and prop contracts are in `component-inventory.md`. Components are composed functionally (e.g. `Product.jsx` composes `ColorSelector`, `SizeSelector`, `QuantityStepper`, `Accordion`, `ProductCard`, plus the page-local `OfferBlock`/`ShippingIncentive` from `Promo.jsx`) — there is no deep inheritance or HOC layering, which maps cleanly onto Blade `@include`/component partials.
+26 components across 5 categories (`core`, `forms`, `feedback`, `navigation`, `commerce`), each shipped as a `.jsx` implementation + a `.d.ts` prop-contract file + a `.prompt.md` generation brief. Full inventory and prop contracts are in `component-inventory.md`. Components are composed functionally (e.g. `Product.jsx` composes `ColorSelector`, `SizeSelector`, `QuantityStepper`, `Accordion`, `ProductCard`, plus the page-local `OfferBlock`/`ShippingIncentive` from `Promo.jsx`) — there is no deep inheritance or HOC layering, which maps cleanly onto Blade `@include`/component partials.
 
 ## 7. Build tooling evidence
 

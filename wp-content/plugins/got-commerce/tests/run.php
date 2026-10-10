@@ -18,6 +18,8 @@ $GLOBALS['test_cache_flush_result'] = true;
 $GLOBALS['test_wc_transient_flushes'] = 0;
 $GLOBALS['test_throw_product_count'] = false;
 $GLOBALS['test_throw_cache_callback'] = false;
+$GLOBALS['test_die_args'] = null;
+$GLOBALS['test_die_message'] = null;
 
 class FakeWpdb
 {
@@ -81,7 +83,7 @@ function __($text, $domain = null) { return $text; }
 function sanitize_text_field(string $text): string { return trim($text); }
 function sanitize_key(string $text): string { return strtolower($text); }
 function wp_unslash($value) { return $value; }
-function current_user_can($capability): bool { return $capability === 'got_manage_site_mode'; }
+function current_user_can($capability): bool { return user_can(wp_get_current_user(), $capability); }
 function wp_get_current_user() { return $GLOBALS['test_current_user'] ?? null; }
 function get_option($key, $default = false) { return $GLOBALS['test_options'][$key] ?? $default; }
 function update_option($key, $value, $autoload = null): bool
@@ -130,8 +132,24 @@ function esc_html($text): string
 {
     return (string) $text;
 }
+function esc_html__($text, $domain = null): string { return (string) $text; }
+function esc_html_e($text, $domain = null): void { echo (string) $text; }
+function esc_url($url): string { return (string) $url; }
+function absint($value): int { return abs((int) $value); }
+function wp_nonce_field($action): void { echo '<input type="hidden" name="_wpnonce" value="test">'; }
+function selected($selected, $current = true, $display = true): string
+{
+    $result = (string) $selected === (string) $current ? ' selected="selected"' : '';
+    if ($display) {
+        echo $result;
+    }
+    return $result;
+}
+function submit_button($text): void { echo '<button type="submit">' . esc_html($text) . '</button>'; }
 function wp_die($message = '', $title = '', $args = []): void
 {
+    $GLOBALS['test_die_message'] = $message;
+    $GLOBALS['test_die_args'] = $args;
     throw new RuntimeException('Unexpected wp_die: ' . $message);
 }
 function user_can($user, $capability): bool { return ! empty($user->caps[$capability]); }
@@ -198,6 +216,8 @@ function reset_state(string $mode = 'coming_soon', int $published = 2, array $in
     $GLOBALS['test_wc_transient_flushes'] = 0;
     $GLOBALS['test_throw_product_count'] = false;
     $GLOBALS['test_throw_cache_callback'] = false;
+    $GLOBALS['test_die_args'] = null;
+    $GLOBALS['test_die_message'] = null;
     $GLOBALS['wpdb']->reset();
 }
 
@@ -222,11 +242,12 @@ class FakeRole
     public function add_cap(string $cap): void { $this->capabilities[$cap] = true; }
 }
 function get_role($name) { return $GLOBALS['test_roles'][$name] ?? null; }
-$GLOBALS['test_roles'] = ['administrator' => new FakeRole(), 'shop_manager' => new FakeRole(), 'editor' => new FakeRole()];
+$GLOBALS['test_roles'] = ['administrator' => new FakeRole(), 'shop_manager' => new FakeRole(), 'editor' => new FakeRole(), 'subscriber' => new FakeRole()];
 SiteMode::grant_role_capabilities();
 check(isset($GLOBALS['test_roles']['administrator']->capabilities[SiteMode::CAPABILITY]), 'Administrator receives site mode capability');
 check(isset($GLOBALS['test_roles']['shop_manager']->capabilities[SiteMode::CAPABILITY]), 'Shop Manager receives site mode capability');
 check(! isset($GLOBALS['test_roles']['editor']->capabilities[SiteMode::CAPABILITY]), 'other roles do not receive site mode capability');
+check(! isset($GLOBALS['test_roles']['subscriber']->capabilities[SiteMode::CAPABILITY]), 'Subscriber does not receive site mode capability');
 reset_state('coming_soon', 5, [10, 11, 12]);
 $counts = SiteMode::get_product_counts();
 check($counts === ['published' => 5, 'in_stock' => 3], 'published and in-stock counts use the paginated total');
@@ -239,11 +260,40 @@ $result = SiteMode::process_submission('store', 'valid-nonce', null);
 check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'unauthenticated submission rejected without mutation');
 $result = SiteMode::process_submission('store', 'valid-nonce', actor(['editor'], true));
 check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'non-approved role rejected without mutation');
+$result = SiteMode::process_submission('store', 'valid-nonce', actor(['subscriber'], true));
+check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'Subscriber role rejected without mutation');
 $result = SiteMode::process_submission('store', 'valid-nonce', actor(['administrator'], false));
 check($result['status'] === 'forbidden' && $GLOBALS['test_options'] === $before, 'missing capability rejected without mutation');
 reset_state('coming_soon', 1, [7]);
 $result = SiteMode::process_submission('store', 'valid-nonce', actor(['shop_manager'], true));
 check($result['status'] === 'changed', 'Shop Manager with capability may change mode');
+
+reset_state('coming_soon', 1, [7]);
+$GLOBALS['test_current_user'] = actor(['shop_manager'], true);
+ob_start();
+SiteMode::render_admin_page();
+$shop_manager_page = ob_get_clean();
+unset($GLOBALS['test_current_user']);
+check(str_contains($shop_manager_page, 'Current mode:') && str_contains($shop_manager_page, 'Save Site Mode'), 'Shop Manager with capability can access the settings page');
+
+// The settings-page callback itself rejects signed-out and low-privilege users.
+foreach ([null, actor(['subscriber'], true)] as $denied_user) {
+    reset_state();
+    $before = $GLOBALS['test_options'];
+    $GLOBALS['test_current_user'] = $denied_user;
+    try {
+        SiteMode::render_admin_page();
+    } catch (RuntimeException) {
+        // The adapter captures wp_die arguments before the production callback exits.
+    }
+    unset($GLOBALS['test_current_user']);
+    check(
+        ($GLOBALS['test_die_args']['response'] ?? null) === 403 && $GLOBALS['test_options'] === $before,
+        null === $denied_user
+            ? 'settings-page callback denies unauthenticated user with 403'
+            : 'settings-page callback denies Subscriber with 403'
+    );
+}
 
 // Nonce and enum validation.
 reset_state();
@@ -268,6 +318,65 @@ check(
         && $GLOBALS['test_cache_flushes'] === 0,
     'admin-post handler adapter rejects invalid nonce without changing mode, audit, or cache state'
 );
+
+// The production admin-post handler rejects signed-out and Subscriber requests with HTTP 403.
+reset_state();
+$before = $GLOBALS['test_options'];
+$GLOBALS['test_current_user'] = null;
+$_POST = ['_wpnonce' => 'valid-nonce', 'got_site_mode' => 'store'];
+try {
+    SiteMode::handle_admin_post();
+} catch (RuntimeException) {
+    // The adapter captures wp_die arguments before the production handler's request exit.
+}
+unset($_POST, $GLOBALS['test_current_user']);
+check(
+    ($GLOBALS['test_die_args']['response'] ?? null) === 403
+        && $GLOBALS['test_options'] === $before
+        && ! isset($GLOBALS['test_options'][SiteMode::ACTIVITY_OPTION])
+        && $GLOBALS['test_cache_flushes'] === 0,
+    'admin-post handler adapter rejects an unauthenticated request with 403 and no mutation'
+);
+
+reset_state();
+$before = $GLOBALS['test_options'];
+$GLOBALS['test_current_user'] = actor(['subscriber'], true);
+$_POST = ['_wpnonce' => 'valid-nonce', 'got_site_mode' => 'store'];
+try {
+    SiteMode::handle_admin_post();
+} catch (RuntimeException) {
+    // The adapter captures wp_die arguments before the production handler's request exit.
+}
+unset($_POST, $GLOBALS['test_current_user']);
+check(
+    ($GLOBALS['test_die_args']['response'] ?? null) === 403
+        && $GLOBALS['test_options'] === $before
+        && ! isset($GLOBALS['test_options'][SiteMode::ACTIVITY_OPTION])
+        && $GLOBALS['test_cache_flushes'] === 0,
+    'admin-post handler adapter rejects a Subscriber with 403 and no mutation'
+);
+
+reset_state('coming_soon', 1, [7]);
+$GLOBALS['test_current_user'] = actor(['shop_manager'], true);
+$GLOBALS['test_redirect_url'] = null;
+$_POST = ['_wpnonce' => 'valid-nonce', 'got_site_mode' => 'store'];
+try {
+    SiteMode::handle_admin_post();
+} catch (RuntimeException) {
+    // The adapter captures the redirect before the production handler's request exit.
+}
+unset($_POST, $GLOBALS['test_current_user']);
+$manager_history = $GLOBALS['test_options'][SiteMode::ACTIVITY_OPTION] ?? [];
+check(
+    str_contains((string) $GLOBALS['test_redirect_url'], 'got_site_mode_result=changed')
+        && SiteMode::get_mode() === 'store'
+        && ($manager_history[0]['actor_id'] ?? null) === 41
+        && $GLOBALS['test_cache_flushes'] === 1,
+    'Shop Manager can submit a valid mode change through admin-post'
+);
+
+reset_state();
+$before = $GLOBALS['test_options'];
 $result = SiteMode::process_submission('live', 'valid-nonce', actor());
 check($result['status'] === 'invalid_mode' && $GLOBALS['test_options'] === $before, 'unknown enum value rejected without mutation');
 

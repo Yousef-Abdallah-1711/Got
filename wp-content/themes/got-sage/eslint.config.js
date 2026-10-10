@@ -7,7 +7,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: ['resources/js/**/*.js', 'vite.config.js', 'eslint.config.js'],
+    files: ['resources/js/**/*.js', 'tests/**/*.js', 'playwright.config.js', 'vite.config.js', 'eslint.config.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

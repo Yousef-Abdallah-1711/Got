@@ -52,7 +52,7 @@ Every capture in the matrix above is also checked for: visible 2px+ focus ring i
 
 - Acid Lime accent: **RESOLVED** — owner-approved, no longer a pending deviation.
 - `--got-surface`/light-mode background minor value drift (implemented design-system values vs. DESIGN.md's documented values): **carried as an accepted baseline**, per `docs/design/dark-light-tokens.md` — the implemented values are the production baseline, not a deviation needing fresh approval each time.
-- Missing brand assets (logo, fonts, photography): pages using placeholders cannot reach genuine 100% parity with *final* brand intent — this contract can only certify parity against the current placeholder reference until those assets exist; this is a content gap, not a visual-contract failure.
+- Remaining brand assets (editable logo vector, icon sprite, licensed fonts, and photography): the supplied raster logo is now in use, while other missing assets still limit exact parity with final brand intent. This is a content gap, not a visual-contract failure.
 
 ## Approved Differences Log (empty — none logged yet; filled in during actual implementation, not during planning)
 

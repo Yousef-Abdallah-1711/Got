@@ -5,7 +5,7 @@
 **Decision**: Acid Lime `#C2FF3D` is the approved primary accent, applied to `--got-cta-bg` (primary button), `--color-focus` (focus ring), and the `AnnouncementBar`'s default treatment, in both themes, while the surface/text palette remains monochrome (obsidian/graphite/silver/off-white) — the accent highlights, it does not replace the base palette.
 **Rationale**: Explicit owner approval (2026-10-09), superseding the earlier flagged conflict between the design system's own default (lime) and the documented brand guide (silver).
 **Alternatives considered**: Silver/gunmetal accent (the previous DESIGN.md-documented default, now not chosen); a user-switchable accent (`data-accent="silver"` override) — the underlying CSS mechanism for this already exists in the ported tokens and is retained as a low-cost, unused escape hatch, not exposed to visitors.
-**Action**: `docs/audit/source-conflicts.md` C-01 and `docs/design/dark-light-tokens.md` should be marked RESOLVED/VERIFIED in a follow-up documentation pass (tracked as a polish task, not blocking this feature's build).
+**Action**: C-01 is recorded RESOLVED in `docs/audit/source-conflicts.md`; `docs/design/dark-light-tokens.md` should preserve the approved semantic mapping and note the optional silver override.
 
 ## Decision: Dark-surface/light-background token value drift
 
@@ -13,10 +13,10 @@
 **Rationale**: The drift is minor (single-shade differences) and re-deriving a third, blended value set would add risk for no clear benefit; the design system's values are what was actually built and reviewed.
 **Alternatives considered**: Reconciling to the DESIGN.md values exactly (rejected — no owner signal requested this, and it would be rework without a stated reason).
 
-## Decision: `--got-ash` undefined-variable question (C-05)
+## Decision: `--got-ash` source token verification (C-05)
 
-**Decision**: Verify `tokens/base.css`/`tokens/effects.css` for a `--got-ash` declaration during implementation (Task-level item, not a planning blocker); if genuinely undefined, define it explicitly as `#A3A3A3` (the documented muted-text value) rather than leaving an unresolved CSS variable reference in production.
-**Rationale**: This is a verification task, not a decision requiring owner input.
+**Decision**: The source file `GØT Design System (2)/tokens/colors.css` defines `--got-ash: #A3A3A3`; preserve that token when porting and confirm the resulting muted-text value.
+**Rationale**: Direct source inspection on 2026-10-10 resolved C-05; this is no longer an undefined-variable investigation.
 
 ## Decision: No-flash theme script placement
 

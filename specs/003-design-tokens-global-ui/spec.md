@@ -103,3 +103,8 @@ As a visitor who cannot or does not use a mouse, I need the theme toggle, header
 - The approved primary accent color is Acid Lime (#C2FF3D), applied consistently in both themes per the project's brand-decision record; the monochrome palette (obsidian/graphite/silver/off-white) remains the dominant surface language, with the accent reserved for CTAs, focus rings, and the announcement bar rather than general-purpose recoloring.
 - Whether direct URLs to store pages remain reachable during Coming Soon mode is a separate, still-open policy decision (tracked in `docs/planning/risks-and-blockers.md`) and is out of scope for this feature, which only builds the header variant itself.
 - Cart drawer content (real line items) is out of scope here — this feature delivers only the drawer's empty-state shell and open/close mechanics; Feature 010 wires it to real cart data.
+
+## Implementation and staging prerequisites
+
+- **Local implementation prerequisite**: work may begin when the local WordPress environment is functioning, GOT Sage and GOT Commerce are active, and the required development dependencies are installed. Remote staging is not required to start local UI implementation.
+- **Staging acceptance prerequisite**: before claiming staging acceptance or production deployment, use a separately provisioned staging environment, verify theme/plugin activation and HTTPS, and complete the required CI and deployment checks. Local evidence does not satisfy this gate.
